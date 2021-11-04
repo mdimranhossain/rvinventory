@@ -150,3 +150,9 @@
 .bg-grey{
   background: #ececec;
 }
+@media screen and (max-width:812px) {
+    .pager img{
+        width:50px;
+        height:40px;
+    }
+}

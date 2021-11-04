@@ -72,7 +72,7 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 				<div class="col-sm-12">
 					<h4 class="pt-2 pb-2 mt-2 bg-grey rounded text-center">Details</h4>
 					<h4 class="pt-2 pb-2"><?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?></h4>
-					<ul class="ml-3">
+					<ul class="ml-4">
 						<li>Condition: <?php echo stripslashes($vehicle->vehicleCondition); ?></li>
 						<li>Payload capacity: <?php echo stripslashes($vehicle->payloadCapacity); ?></li>
 						<li>Empty weight: <?php echo stripslashes($vehicle->emptyWeight); ?></li>

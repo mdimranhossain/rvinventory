@@ -46,7 +46,7 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 									</li>
 								<?php endforeach; ?>
 							</ul>
-							<ul class="pager">
+							<ul class="pager m-0 p-0">
 								<?php 
 								$i = 0;
 									foreach( $images as $image ): 
@@ -72,7 +72,7 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 				<div class="col-sm-12">
 					<h4 class="pt-2 pb-2 mt-2 bg-grey rounded text-center">Details</h4>
 					<h4 class="pt-2 pb-2"><?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?></h4>
-					<ul class="m-1">
+					<ul class="ml-3">
 						<li>Condition: <?php echo stripslashes($vehicle->vehicleCondition); ?></li>
 						<li>Payload capacity: <?php echo stripslashes($vehicle->payloadCapacity); ?></li>
 						<li>Empty weight: <?php echo stripslashes($vehicle->emptyWeight); ?></li>

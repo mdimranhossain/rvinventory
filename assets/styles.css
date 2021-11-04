@@ -88,6 +88,7 @@
 .pager li{
   display: inline-block;
   vertical-align: top;
+  margin-left:5px;
 }
 .pager img{
   width: 100px;

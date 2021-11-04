@@ -26,9 +26,9 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="row">
-				<!-- <div class="col-sm-12 text-center">
-					<h2><?php //echo $vehicleTitle; ?></h2>
-				</div> -->
+				<div class="col-sm-12 text-center">
+					<h2><?php echo $vehicleTitle; ?></h2>
+				</div>
 				<div class="col-sm-12">
 					<?php
 						if($vehicle->gallery){ 

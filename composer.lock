@@ -171,12 +171,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f9b98cdecafe28444fe8bc751ab57f88e0b3d8c3"
+                "reference": "cdd7ff65c3245cd0a73f9f65e20783ddb5f9e682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f9b98cdecafe28444fe8bc751ab57f88e0b3d8c3",
-                "reference": "f9b98cdecafe28444fe8bc751ab57f88e0b3d8c3",
+                "url": "https://api.github.com/repos/symfony/console/zipball/cdd7ff65c3245cd0a73f9f65e20783ddb5f9e682",
+                "reference": "cdd7ff65c3245cd0a73f9f65e20783ddb5f9e682",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +262,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-03T12:53:53+00:00"
+            "time": "2021-11-04T12:16:09+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '2c7c4d126d04d5971219795159dcc142f2da9d3a',
+    'reference' => 'aed539a6371610c2b753496648941a22acd95d6f',
     'name' => 'mdimranhossain/vehicleinventory',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '2c7c4d126d04d5971219795159dcc142f2da9d3a',
+      'reference' => 'aed539a6371610c2b753496648941a22acd95d6f',
     ),
     'n98/junit-xml' => 
     array (
@@ -61,7 +61,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '6b71e16a5e9c1a163268c60cb1a528a01d72e5d9',
+      'reference' => 'f9b98cdecafe28444fe8bc751ab57f88e0b3d8c3',
     ),
     'symfony/deprecation-contracts' => 
     array (
@@ -79,7 +79,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '3d70c86483c61de33232a6197cf84e356f88fdf1',
+      'reference' => 'd48f1c3f9f1fde4c2a8cb179378ee309023ea757',
     ),
     'symfony/polyfill-ctype' => 
     array (
@@ -89,7 +89,7 @@
       array (
         0 => '1.23.x-dev',
       ),
-      'reference' => 'f24ae462b1d60c333df104f0b81ec7d0e12f6e9f',
+      'reference' => '30885182c981ab175d4d034db0f6f469898070ab',
     ),
     'symfony/polyfill-intl-grapheme' => 
     array (
@@ -99,7 +99,7 @@
       array (
         0 => '1.23.x-dev',
       ),
-      'reference' => '16880ba9c5ebe3642d1995ab866db29270b36535',
+      'reference' => '5911fe42c266a5917aef12e45fbd3a640a9e3b18',
     ),
     'symfony/polyfill-intl-normalizer' => 
     array (
@@ -119,7 +119,7 @@
       array (
         0 => '1.23.x-dev',
       ),
-      'reference' => '344e456152e22a1bce3048c6c311059ea14bde47',
+      'reference' => '11b9acb5e8619aef6455735debf77dde8825795c',
     ),
     'symfony/polyfill-php73' => 
     array (
@@ -158,7 +158,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b076aa9be226405545de739ef6711f6141651700',
+      'reference' => '6bacc79268fb8a2fac52c9f66afe5e041220233f',
     ),
     'symfony/service-contracts' => 
     array (
@@ -176,7 +176,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '412eda2039ad5466f823c3696c0c309e6c140086',
+      'reference' => 'dad92b16d84cb661f39c85a5dbb6e4792b92e90f',
     ),
     'symfony/yaml' => 
     array (
@@ -185,7 +185,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '251888d28bc29dc879fb566bb263f0607bef4f0a',
+      'reference' => 'c55bc64d9fc7102da2254473a55fa100ddbb746b',
     ),
   ),
 );

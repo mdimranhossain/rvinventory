@@ -40,7 +40,7 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 									
 									?>
 									<li>
-										<a href="<?php echo esc_url($image); ?>">
+										<a data-fancybox="gallery" data-caption="<?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?>" href="<?php echo esc_url($image); ?>">
 											<img src="<?php echo esc_url($image); ?>" alt="<?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?>" />
 										</a>
 									</li>

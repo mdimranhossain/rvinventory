@@ -1,9 +1,9 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name: VehicleInventory
- * Plugin URI:        https://imran.bhubs.com/wp-content/plugins/vehicleinventory/
- * Description:       Manages Vehicle Inventory for auto dealers.
+ * Plugin Name: RV Inventory
+ * Plugin URI:        https://imran.bhubs.com/wp-content/plugins/rvinventory/
+ * Description:       Manages Vehicle Inventory for rv dealers.
  * Version:           1.0
  * Requires at least: 5.0
  * Requires PHP:      7.2
@@ -11,7 +11,7 @@
  * Author URI:        https://mdimranhossain.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       vehicleinventory
+ * Text Domain:       rvinventory
  */
 
 declare(strict_types=1);

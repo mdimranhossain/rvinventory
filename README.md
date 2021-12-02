@@ -3,7 +3,7 @@
 
 ### What is this repository for? ###
 
-* Inventory Management System for RV Dealers.
+* Inventory Management System for RV Dealers (WordPress Plugins).
 * Version 1.0.0
 
 ### How do I get set up? ###

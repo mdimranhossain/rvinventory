@@ -1,29 +1,19 @@
-# README #
+# RV Inventory #
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Inventory Management System for RV Dealers.
+* Version 1.0.0
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+* Navigate to WP plguins directory ('wp-content/plugins')
+* Install Dependencies with Composer ('composer install')
+* Activate Plugins from WP Admin
+* Adjust your settings
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Imran Hossain (mdimranhossain8@gmail.com)
+* Leave a message on https://www.bhubs.com/contact-us/

@@ -16,6 +16,7 @@ $create_table = "CREATE TABLE IF NOT EXISTS `{$table}` (
     `floorWidth` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
     `sideHeight` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
     `bodyType` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+    `rvCategory` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
     `featuredImage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
     `gallery` text COLLATE utf8_unicode_ci DEFAULT NULL,
     `featuredid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

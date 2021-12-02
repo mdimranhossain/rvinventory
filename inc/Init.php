@@ -82,8 +82,8 @@ class Init
     public function viAddPage()
     {
         add_menu_page(
-            'All Inventory',
-            'All Inventory',
+            'Inventory',
+            'Inventory',
             'read',
             'vivehicles',
             [$this, "viVehicles"],
@@ -100,7 +100,7 @@ class Init
             71
         );
         add_submenu_page(
-            'vivehicles',
+            '',
             '',
             '',
             'manage_options',

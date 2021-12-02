@@ -22,15 +22,23 @@ $pageTitle = get_option('vi_pageTitle');
 			global $wpdb;
 			$table = $wpdb->prefix.'inventory';
 			$page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
-			$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT('id') FROM {$table} WHERE %d", 1));
+			$rvcat = 1;
+			$where = "%s";
+			if(!empty($_GET['rvcat'])){
+				$rvcat = $_GET['rvcat'];
+				$where = "rvCategory ='%s'";
+			}
+
+			$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT('id') FROM {$table} WHERE $where", $rvcat));
 			$per_page = 10;
 			if ($page > 1) {
 				$offset = ($page- 1) * $per_page ;
 			} else {
 				$offset = 0;
 			}
+			
 
-			$query = $wpdb->prepare("SELECT * FROM {$table} WHERE %d ORDER BY id DESC LIMIT $offset,$per_page", 1);
+			$query = $wpdb->prepare("SELECT * FROM {$table} WHERE $where ORDER BY id DESC LIMIT $offset,$per_page", $rvcat);
             //echo $query;
 			$vehicles = $wpdb->get_results($query);
             //print_r($vehicles);

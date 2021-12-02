@@ -142,6 +142,17 @@ function viurl(string $viLink){
           <label for="bodyType" class="control-label">Body Type</label>
           <input type="text" name="bodyType" id="bodyType" class="form-control" value="<?php echo !empty($vehicle->bodyType)?$vehicle->bodyType:'';?>" placeholder="Vehilce Body Type" />
         </div>
+
+        <div class="form-group">
+          <label for="rvCategory" class="control-label">RV Category</label>
+          <select name="rvCategory" id="rvCategory" class="form-control">
+          <?php echo !empty($vehicle->rvCategory)?'<option selected value="'.$vehicle->rvCategory.'">'.$vehicle->rvCategory.'</option>':'<option value="">Select</option>';?>
+            <option value="Motorhomes">Motorhomes</option>
+            <option value="Travel Trailers">Travel Trailers</option>
+            <option value="Fifth Wheels">Fifth Wheels</option>
+          </select>
+        </div>
+
       </div>
       <div class="tabcontent additionalcontent">
         <div class="form-group">

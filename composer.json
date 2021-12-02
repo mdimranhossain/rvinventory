@@ -1,6 +1,6 @@
 {
-    "name": "mdimranhossain/vehicleinventory",
-    "description": "Manages Vehicle Inventory for auto dealers",
+    "name": "mdimranhossain/rvinventory",
+    "description": "Manages Vehicle Inventory for RV dealers",
     "type": "wordpress-plugin",
     "license": "GPL",
     "authors": [
@@ -9,12 +9,9 @@
             "email": "mdimranhossain8@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require":{},
     "autoload":{
 		"psr-4":{"Inc\\":"./inc"}
-	   },
-    "require-dev": {
-        "overtrue/phplint": "^2.0"
-    }
+	   }
 }

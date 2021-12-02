@@ -47,7 +47,7 @@
 .publishcontent{
   display: none;
 }
-.specscontent label, .specscontent input{
+.specscontent label, .specscontent input, .specscontent select{
   display: inline-block!important;
   width:auto;
 }

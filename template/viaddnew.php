@@ -43,6 +43,7 @@ function viurl(string $viLink){
             'floorWidth' => $input['floorWidth'],
             'sideHeight' => $input['sideHeight'],
             'bodyType' => $input['bodyType'],
+            'rvCategory' => $input['rvCategory'],
             'addtionalInfo' => $input['addtionalInfo'],
             'featuredImage' => $input['featuredImage'],
             'featuredid' => $input['featuredid'],
@@ -140,9 +141,12 @@ function viurl(string $viLink){
           <label for="rvCategory" class="control-label">RV Category</label>
           <select name="rvCategory" id="rvCategory" class="form-control">
             <option value="">Select</option>
+            <option value="Class C RVs">Class C RVs</option>
+            <option value="Campers">Campers</option>
+            <option value="Fifth Wheels">Fifth Wheels</option>
             <option value="Motorhomes">Motorhomes</option>
             <option value="Travel Trailers">Travel Trailers</option>
-            <option value="Fifth Wheels">Fifth Wheels</option>
+            <option value="Misc Inventory">Misc. Inventory</option>
           </select>
         </div>
       </div>

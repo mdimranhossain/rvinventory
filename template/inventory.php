@@ -122,6 +122,7 @@ $pageTitle = get_option('vi_pageTitle');
 		<script>
 		$(document).ready(function() {
 			$('.pages ul').addClass('pagination');
+			$('.pages ul').removeClass('page-numbers');
 			$('.pages ul li').addClass('page-item');
 			$('.pages ul li a').addClass('page-link');
 			$('.pages ul li span.current').addClass('page-link');

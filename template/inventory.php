@@ -125,6 +125,7 @@ $pageTitle = get_option('vi_pageTitle');
 			$('.pages ul').removeClass('page-numbers');
 			$('.pages ul li').addClass('page-item');
 			$('.pages ul li a').addClass('page-link');
+			$('.pages ul li a').removeClass('page-numbers');
 			$('.pages ul li span.current').addClass('page-link');
 		});
 		</script>

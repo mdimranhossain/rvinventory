@@ -34,16 +34,19 @@ class Setting
         $availability = strtolower($data['availability']);
         update_option('vi_availability', $availability);
 
-        $address = strtolower($data['address']);
+        $address = $data['address'];
         update_option('vi_address', $address);
 
-        $phone = strtolower($data['phone']);
+        $phone = $data['phone'];
         update_option('vi_phone', $phone);
 
-        $weekday = strtolower($data['weekday']);
+        $weekday = $data['weekday'];
         update_option('vi_weekday', $weekday);
 
-        $weekend = strtolower($data['weekend']);
+        $saturday = $data['saturday'];
+        update_option('vi_saturday', $saturday);
+
+        $weekend = $data['weekend'];
         update_option('vi_weekend', $weekend);
         
         $data['slug'] = get_option('vi_slug');
@@ -53,6 +56,7 @@ class Setting
         $data['address'] = get_option('vi_address');
         $data['phone'] = get_option('vi_phone');
         $data['weekday'] = get_option('vi_weekday');
+        $data['saturday'] = get_option('vi_saturday');
         $data['weekend'] = get_option('vi_weekend');
         return json_encode($data);
     }
@@ -66,6 +70,7 @@ class Setting
         $data['address'] = get_option('vi_address');
         $data['phone'] = get_option('vi_phone');
         $data['weekday'] = get_option('vi_weekday');
+        $data['saturday'] = get_option('vi_saturday');
         $data['weekend'] = get_option('vi_weekend');
         return $data;
     }

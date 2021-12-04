@@ -85,15 +85,15 @@ class Vehicle
         $data['slug'] = '';
         if(!empty($_REQUEST['make'])){
             $data['make'] = trim($_REQUEST['make']);
-            $data['slug'] = str_replace(' ', '-', $data['make']);
+            $data['slug'] = $this->viBuildSlug($data['make']);
         }
         if(!empty($_REQUEST['model'])){
             $data['model'] = trim($_REQUEST['model']);
-            $data['slug'] .= '-'.str_replace(' ', '-', $data['model']);
+            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
         }
         if(!empty($_REQUEST['additional'])){
             $data['additional'] = trim($_REQUEST['additional']);
-            $data['slug'] .= '-'.str_replace(' ', '-', $data['additional']);
+            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
         }
 
        $data['count'] = $this->db->get_results("SELECT * FROM ".$this->table." WHERE slug LIKE '%".$data['slug']."%'");
@@ -104,7 +104,15 @@ class Vehicle
         $data['slug'] = strtolower($data['slug']);
        return json_encode($data);
     }
-
+    // build vehicle slug
+    public function viBuildSlug(string $string)
+    {
+        $string = trim(strtolower($string));
+        $string = preg_replace('/[^a-z0-9 -]+/', '', $string);
+        $string = preg_replace('/ +/', ' ', $string);
+        $string = str_replace(' ', '-', $string);
+        return trim($string, '-');
+    }
 
     // Vehicle Update
 

@@ -84,7 +84,18 @@ $pageTitle = get_option('vi_pageTitle');
 	      			</div>
 
 	      			<div class="col-sm-4 text-center dealer">
-						<h4>Call For PRICING</h4>
+						<h4>
+							<?php
+
+							if(!empty($vehicle->salePrice) && $vehicle->salePrice>0){
+								echo "Price: $".$vehicle->salePrice;
+							}elseif(!empty($vehicle->msrp) && $vehicle->msrp>0){
+								echo "<br>MSRP: $".$vehicle->msrp;
+							}else{
+								echo 'Call For PRICING';
+							}
+							?>
+						</h4>
 						<a href="<?php echo esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug; ?>" class="btn btn-link btn-lg border border-danger d-block">View Details</a>
 						<a href="javascript:;" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
 	      			</div>

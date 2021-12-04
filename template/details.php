@@ -11,6 +11,7 @@ $availability = get_option('vi_availability');
 $address = get_option('vi_address');
 $phone = get_option('vi_phone');
 $weekday = get_option('vi_weekday');
+$saturday = get_option('vi_saturday');
 $weekend = get_option('vi_weekend');
 //echo $inventory;
 global $wpdb;
@@ -63,28 +64,29 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 					<!-- <img src="<?php //echo $vehicle->featuredImage; ?>" alt="" class="img-fluid" /> -->
 				</div>
 			
-				<div class="col-sm-12">
-					<p><?php echo $vehicle->description; ?></p>
-				</div>
 			</div>
 			<div class="container">
 			<div class="row bg-white rounded">
 				<div class="col-sm-12">
 					<h4 class="pt-2 pb-2 mt-2 bg-grey rounded text-center">Details</h4>
 					<h4 class="pt-2 pb-2"><?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?></h4>
-					<ul class="ml-4">
-						<li>Condition: <?php echo stripslashes($vehicle->vehicleCondition); ?></li>
-						<li>Payload capacity: <?php echo stripslashes($vehicle->payloadCapacity); ?></li>
-						<li>Empty weight: <?php echo stripslashes($vehicle->emptyWeight); ?></li>
-						<li>Floor length: <?php echo stripslashes($vehicle->floorLength); ?></li>
-						<li>Floor width: <?php echo stripslashes($vehicle->floorWidth); ?></li>
-						<li>Side height: <?php echo stripslashes($vehicle->sideHeight); ?></li>
-						<li>Body type: <?php echo stripslashes($vehicle->bodyType); ?></li>
-					</ul>
+					<!-- <ul class="ml-4">
+						<li>Condition: <?php //echo stripslashes($vehicle->vehicleCondition); ?></li>
+						<li>Payload capacity: <?php //echo stripslashes($vehicle->payloadCapacity); ?></li>
+						<li>Empty weight: <?php //echo stripslashes($vehicle->emptyWeight); ?></li>
+						<li>Floor length: <?php //echo stripslashes($vehicle->floorLength); ?></li>
+						<li>Floor width: <?php //echo stripslashes($vehicle->floorWidth); ?></li>
+						<li>Side height: <?php //echo stripslashes($vehicle->sideHeight); ?></li>
+						<li>Body type: <?php //echo stripslashes($vehicle->bodyType); ?></li>
+					</ul> -->
 				</div>
-				<div class="col-sm-12 m-3">
+				<!-- <div class="col-sm-12 m-3">
 					<h5 class="pt-2 pb-2">Additional Information:</h5>
-					<p><?php echo nl2br(htmlentities($vehicle->addtionalInfo, ENT_QUOTES, 'UTF-8')); ?></p>
+					<p><?php //echo nl2br(htmlentities($vehicle->addtionalInfo, ENT_QUOTES, 'UTF-8')); ?></p>
+				</div> -->
+
+				<div class="col-sm-12">
+					<p><?php echo $vehicle->description; ?></p>
 				</div>
 				
 			</div> 
@@ -100,9 +102,9 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 		
 			<div class="contact p-3 bg-white rounded">
 			<h3 class="contact-title text-danger border-bottom-1">Contact Details</h3>
-			<p><?php echo strtoupper($address); ?><br>
+			<p><?php echo $address; ?><br>
 			<b>Phone:</b> <a href="tel:<?php echo $phone;?>"><?php echo $phone;?></a><br>
-			<b>Monday – Saturday:</b> <?php echo strtoupper($weekday);?><br> <b>Sunday:</b> <?php echo strtoupper($weekend);?></p>
+			<b>Monday – Friday:</b> <?php echo $weekday;?><br> <b>Saturday:</b> <?php echo $saturday;?><br> <b>Sunday:</b> <?php echo $weekend;?></p>
 			</div>
 		</div>
 	</div> 

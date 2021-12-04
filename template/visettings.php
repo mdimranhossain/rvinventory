@@ -27,6 +27,7 @@ if(!empty($_REQUEST['vi_slug'])){
   $data['address'] = trim($_REQUEST['vi_address']);
   $data['phone'] = trim($_REQUEST['vi_phone']);
   $data['weekday'] = trim($_REQUEST['vi_weekday']);
+  $data['saturday'] = trim($_REQUEST['vi_saturday']);
   $data['weekend'] = trim($_REQUEST['vi_weekend']);
   $setting->viUpdateInventoryOptions($data);
   global $wp_rewrite;
@@ -48,7 +49,7 @@ flush_rewrite_rules();
         <form id="visettings" action="" method="POST">
           <input type="hidden" name="user_id" value="">
           <div class="form-group">
-          <label class="control-label" for="vi_slug">Inventory Slug</label>
+          <label class="control-label" for="vi_slug">Inventory Slug/URL</label>
             <div class="row">
               <input type="text" class="form-control col-sm-2" value="<?php echo esc_url(home_url()).'/';?>" disabled /><input type="text" class="form-control col-sm-3" id="vi_slug" name="vi_slug" value="<?php echo !empty($data['slug'])?$data['slug']:'';?>" />
             </div>
@@ -72,9 +73,14 @@ flush_rewrite_rules();
             <label class="control-label" for="vi_phone">Phone: </label>
             <input type="text" class="form-control col-sm-6" id="vi_phone" name="vi_phone" value="<?php echo $data['phone'];?>" />
             </div>
+
             <div class="row">
-            <label class="control-label" for="vi_weekday">Monday – Saturday: </label>
+            <label class="control-label" for="vi_weekday">Monday – Friday: </label>
             <input type="text" class="form-control col-sm-5" id="vi_weekday" name="vi_weekday" value="<?php echo $data['weekday'];?>" />
+            </div>
+            <div class="row">
+            <label class="control-label" for="vi_saturday">Saturday: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_saturday" name="vi_saturday" value="<?php echo $data['saturday'];?>" />
             </div>
             <div class="row">
             <label class="control-label" for="vi_weekend">Sunday: </label>

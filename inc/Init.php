@@ -22,6 +22,7 @@ class Init
     private $vi_address;
     private $vi_phone;
     private $vi_weekday;
+    private $vi_saturday;
     private $vi_weekend;
     
     public function __construct()
@@ -40,6 +41,7 @@ class Init
         $this->vi_address = !empty(get_option('vi_address'))?get_option('vi_address'):'';
         $this->vi_phone = !empty(get_option('vi_phone'))?get_option('vi_phone'):'';
         $this->vi_weekday = !empty(get_option('vi_weekday'))?get_option('vi_weekday'):'';
+        $this->vi_saturday = !empty(get_option('vi_saturday'))?get_option('vi_saturday'):'';
         $this->vi_weekend = !empty(get_option('vi_weekend'))?get_option('vi_weekend'):'';
 
     }
@@ -75,8 +77,6 @@ class Init
                 die;
             }
         } );
-
-       // add_filter( 'plugin_action_links', [$this,'viSettingLink']);
     }
 
     public function viAddPage()
@@ -295,6 +295,8 @@ class Init
         $vi_phone = $this->vi_phone;
         global $vi_weekday;
         $vi_weekday = $this->vi_weekday;
+        global $vi_saturday;
+        $vi_saturday = $this->vi_saturday;
         global $vi_weekend;
         $vi_weekend = $this->vi_weekend;
 
@@ -316,6 +318,7 @@ class Init
         add_option( 'vi_address', $vi_address );
         add_option( 'vi_phone', $vi_phone );
         add_option( 'vi_weekday', $vi_weekday );
+        add_option( 'vi_saturday', $vi_saturday );
         add_option( 'vi_weekend', $vi_weekend );
     }
 

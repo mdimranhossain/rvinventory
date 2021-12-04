@@ -1,7 +1,7 @@
 <?php
 /*
 * Vehicle
-* @Package: VehicleInventory
+* @Package: RVInventory
 */
 
 declare(strict_types=1);
@@ -89,17 +89,17 @@ class Vehicle
         }
         if(!empty($_REQUEST['model'])){
             $data['model'] = trim($_REQUEST['model']);
-            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
+            $data['slug'] .= '-'.$this->viBuildSlug($data['model']);
         }
         if(!empty($_REQUEST['additional'])){
             $data['additional'] = trim($_REQUEST['additional']);
-            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
+            $data['slug'] .= '-'.$this->viBuildSlug($data['additional']);
         }
 
-       $data['count'] = $this->db->get_results("SELECT * FROM ".$this->table." WHERE slug LIKE '%".$data['slug']."%'");
+        $data['count'] = $this->db->get_var("SELECT COUNT('id') FROM ".$this->table." WHERE slug LIKE '%".$data['slug']."%'");
 
-        if(count($data['count'])>0){
-            $data['slug'] = $data['slug'].count($data['count'])+1;
+        if($data['count']>0){
+            $data['slug'] = $data['slug'].'-'.($data['count']+1);
         }
         $data['slug'] = strtolower($data['slug']);
        return json_encode($data);

@@ -88,11 +88,11 @@ $pageTitle = get_option('vi_pageTitle');
 							<?php
 
 							if(!empty($vehicle->salePrice) && $vehicle->salePrice>0){
-								echo "Price: $".$vehicle->salePrice;
+								echo "Price: $".number_format($vehicle->salePrice,2);
 							}elseif(!empty($vehicle->msrp) && $vehicle->msrp>0){
-								echo "<br>MSRP: $".$vehicle->msrp;
+								echo "<br>MSRP: $".number_format($vehicle->msrp,2);
 							}else{
-								echo 'Call For PRICING';
+								echo 'Call For Pricing';
 							}
 							?>
 						</h4>

@@ -109,7 +109,7 @@ $pageTitle = get_option('vi_pageTitle');
 							?>
 						</h4>
 						<a href="<?php echo esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug; ?>" class="btn btn-link btn-lg border border-danger d-block">View Details</a>
-						<a href="<?php esc_url($contact_dealer); ?>" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
+						<a href="<?php echo esc_url($contact_dealer); ?>" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
 	      			</div>
 	      				
 	      		</div>

@@ -8,6 +8,7 @@ $slug = get_option('vi_slug');
 $slug = get_query_var($slug);
 $emailfriend = get_option('vi_emailfriend');
 $availability = get_option('vi_availability');
+$contact_dealer = get_option('vi_contact_dealer');
 $address = get_option('vi_address');
 $phone = get_option('vi_phone');
 $weekday = get_option('vi_weekday');

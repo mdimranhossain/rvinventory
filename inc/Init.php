@@ -86,47 +86,6 @@ class Init
             }
         } );
 
-        // add_filter('query_vars', function( $query_vars ){
-        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
-        //     // $query_vars[] = $this->vi_slug;
-        //     foreach($cats as $cat){
-        //         $query_vars[] = $cat;
-        //     }
-        //     return $query_vars;
-        // } );
-
-        // add_action('init',  function() {
-        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
-        //     foreach($cats as $cat){
-        //         add_rewrite_rule('^'.$cat.'/?([^/]*)/?', 'index.php?'.$cat.'=$matches[1]', 'top');
-        //     }
-        // });
-
-        // add_action('template_redirect', function(){
-        //     $inventory = get_query_var( $this->vi_slug );
-        //     if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
-        //         include $this->viPath . '/template/inventory.php';
-        //         die;
-        //     }elseif($inventory){
-        //         include $this->viPath . '/template/details.php';
-        //         die;
-        //     }
-        // });
-
-        // add_action( 'template_redirect', function(){
-        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
-        //     foreach($cats as $cat){
-        //         $inventory = get_query_var( $cat );
-        //         if(strpos($_SERVER['REQUEST_URI'], $cat) !== false && empty($inventory)){
-        //             include $this->viPath . '/template/inventory.php';
-        //             die;
-        //         }elseif($inventory){
-        //             include $this->viPath . '/template/details.php';
-        //             die;
-        //         }
-        //     }
-        // });
-
         // ShortCode
         add_action( 'init', [$this, 'viShortcodes_init'] );
 

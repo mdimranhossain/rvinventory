@@ -41,7 +41,7 @@ class Init
         $this->vi_slug = !empty(get_option('vi_slug'))?get_option('vi_slug'):'inventory';
         $this->vi_emailfriend = !empty(get_option('vi_emailfriend'))?get_option('vi_emailfriend'):'';
         $this->vi_availability = !empty(get_option('vi_availability'))?get_option('vi_availability'):'';
-        $this->vi_contact_dealer = !empty(get_option('vi_contact_dealer'))?get_option('vi_contact_dealer'):'contact';
+        $this->vi_contact_dealer = !empty(get_option('vi_contact_dealer'))?get_option('vi_contact_dealer'):'/contact';
         $this->vi_address = !empty(get_option('vi_address'))?get_option('vi_address'):'';
         $this->vi_phone = !empty(get_option('vi_phone'))?get_option('vi_phone'):'';
         $this->vi_weekday = !empty(get_option('vi_weekday'))?get_option('vi_weekday'):'';

@@ -134,6 +134,14 @@ flush_rewrite_rules();
 
             <div class="row">
 
+            <label class="control-label" for="vi_contact_dealer">Check Availability: </label>
+
+            <input type="text" class="form-control col-sm-6" id="vi_contact_dealer" name="vi_contact_dealer" value="<?php echo $data['contact_dealer'];?>" />
+
+            </div>
+
+            <div class="row">
+
             <label class="control-label" for="vi_address">Address: </label>
 
             <input type="text" class="form-control col-sm-6" id="vi_address" name="vi_address" value="<?php echo $data['address'];?>" />

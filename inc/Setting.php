@@ -12,6 +12,7 @@ class Setting
 {   private $db;
     private $table;
     private $imageTable;
+
     public function __construct()
     {
         global $wpdb;
@@ -34,6 +35,9 @@ class Setting
         $availability = strtolower($data['availability']);
         update_option('vi_availability', $availability);
 
+        $contact_dealer = strtolower($data['contact_dealer']);
+        update_option('vi_contact_dealer', $contact_dealer);
+
         $address = $data['address'];
         update_option('vi_address', $address);
 
@@ -53,6 +57,7 @@ class Setting
         $data['pageTitle'] = get_option('vi_pageTitle');
         $data['emailfriend'] = get_option('vi_emailfriend');
         $data['availability'] = get_option('vi_availability');
+        $data['contact_dealer'] = get_option('vi_contact_dealer');
         $data['address'] = get_option('vi_address');
         $data['phone'] = get_option('vi_phone');
         $data['weekday'] = get_option('vi_weekday');
@@ -67,6 +72,7 @@ class Setting
         $data['pageTitle'] = get_option('vi_pageTitle');
         $data['emailfriend'] = get_option('vi_emailfriend');
         $data['availability'] = get_option('vi_availability');
+        $data['contact_dealer'] = get_option('vi_contact_dealer');
         $data['address'] = get_option('vi_address');
         $data['phone'] = get_option('vi_phone');
         $data['weekday'] = get_option('vi_weekday');

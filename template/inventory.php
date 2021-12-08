@@ -17,6 +17,7 @@ $slug = 'rvs-for-sale-everett';
 
 // }
 $phone = get_option('vi_phone');
+$contact_dealer = get_option('vi_contact_dealer');
 $pageTitle = get_option('vi_pageTitle');
 ?>
 <script>document.title = "<?php echo $pageTitle;?>";</script>
@@ -108,7 +109,7 @@ $pageTitle = get_option('vi_pageTitle');
 							?>
 						</h4>
 						<a href="<?php echo esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug; ?>" class="btn btn-link btn-lg border border-danger d-block">View Details</a>
-						<a href="javascript:;" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
+						<a href="<?php esc_url($contact_dealer); ?>" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
 	      			</div>
 	      				
 	      		</div>

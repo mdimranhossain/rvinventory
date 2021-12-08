@@ -75,6 +75,7 @@ class Vehicle
         $total  = $this->viTotal($rvcat);
         $slug = get_option('vi_slug');
         $phone = get_option('vi_phone');
+        $contact_dealer = get_option('vi_contact_dealer');
 
         $pagination = paginate_links( array(
             'base' => add_query_arg('page', '%#%'),
@@ -135,13 +136,12 @@ class Vehicle
                             }        
                 $output .= '</h4>
                             <a href="'.esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug.'" class="btn btn-link btn-lg border border-danger d-block">View Details</a>
-                            <a href="javascript:;" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
+                            <a href="'.esc_url($contact_dealer).'" class="btn btn-link btn-lg border border-danger d-block">$ Contact Dealer</a>
                         </div>'; // dealer info ends
             $output .= '</div>'; // end vehicle content
             
             $output .= '</div>'; // end vehicle wrapper
         } // end foreach vehicles
-        
         
         $output .= '';
         // pagination

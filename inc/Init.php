@@ -21,6 +21,7 @@ class Init
     private $vi_slug;
     private $vi_emailfriend;
     private $vi_availability;
+    private $vi_contact_dealer;
     private $vi_address;
     private $vi_phone;
     private $vi_weekday;
@@ -40,6 +41,7 @@ class Init
         $this->vi_slug = !empty(get_option('vi_slug'))?get_option('vi_slug'):'inventory';
         $this->vi_emailfriend = !empty(get_option('vi_emailfriend'))?get_option('vi_emailfriend'):'';
         $this->vi_availability = !empty(get_option('vi_availability'))?get_option('vi_availability'):'';
+        $this->vi_contact_dealer = !empty(get_option('vi_contact_dealer'))?get_option('vi_contact_dealer'):'contact';
         $this->vi_address = !empty(get_option('vi_address'))?get_option('vi_address'):'';
         $this->vi_phone = !empty(get_option('vi_phone'))?get_option('vi_phone'):'';
         $this->vi_weekday = !empty(get_option('vi_weekday'))?get_option('vi_weekday'):'';
@@ -361,6 +363,8 @@ class Init
         $vi_emailfriend = $this->vi_emailfriend;
         global $vi_availability;
         $vi_availability = $this->vi_availability;
+        global $vi_contact_dealer;
+        $vi_contact_dealer = $this->vi_contact_dealer;
         global $vi_address;
         $vi_address = $this->vi_address;
         global $vi_phone;
@@ -387,6 +391,7 @@ class Init
         add_option( 'vi_slug', $vi_slug );
         add_option( 'vi_emailfriend', $vi_emailfriend );
         add_option( 'vi_availability', $vi_availability );
+        add_option( 'vi_contact_dealer', $vi_contact_dealer );
         add_option( 'vi_address', $vi_address );
         add_option( 'vi_phone', $vi_phone );
         add_option( 'vi_weekday', $vi_weekday );

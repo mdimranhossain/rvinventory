@@ -3,10 +3,21 @@
  * Template Name: Inventory List
  */
 get_header();
-$slug = get_option('vi_slug');
+// $slug = get_option('vi_slug');
+// $catpages = ['rvs-for-sale-everett'=>'rvs-for-sale-everett','class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','motorhomes'=>'Motorhomes','travel-trailers'=>'Travel Trailers'];
+$cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+// foreach($catpages as $key=>$val){
+// 	$inventory = get_query_var($key);
+//     if(strpos($_SERVER['REQUEST_URI'], $key) == true && !empty($inventory)){
+// 		$slug = $key;
+// 	}
+// }
+$slug = 'rvs-for-sale-everett';
+// if(){
+
+// }
 $phone = get_option('vi_phone');
 $pageTitle = get_option('vi_pageTitle');
-
 ?>
 <script>document.title = "<?php echo $pageTitle;?>";</script>
 <div class="bead">
@@ -28,7 +39,7 @@ $pageTitle = get_option('vi_pageTitle');
 				$rvcat = $_GET['rvcat'];
 				$where = "rvCategory ='%s'";
 			}
-
+			
 			$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT('id') FROM {$table} WHERE $where", $rvcat));
 			$per_page = 10;
 			if ($page > 1) {
@@ -63,7 +74,7 @@ $pageTitle = get_option('vi_pageTitle');
 	      			<div class="col-sm-4">
 						<?php
 							if($vehicle->gallery){ 
-								$images = explode(',',$vehicle->gallery)
+								$images = explode(',',$vehicle->gallery);
 								?>
 								<ul class="slider">
 									<?php foreach( $images as $image ): ?>

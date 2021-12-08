@@ -1,12 +1,14 @@
 <?php
 /*
 * Init
-* @Package: VehicleInventory
+* @Package: rvinventory
 */
 
 declare(strict_types=1);
 
 namespace Inc;
+
+use Inc\Vehicle as Vehicle;
 
 class Init
 {
@@ -49,9 +51,13 @@ class Init
     public function start()
     {
         add_action('admin_enqueue_scripts', [$this, 'viAdminAssets']);
-        if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false){
+        // $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+        // foreach($cats as $cat){
+        //     if (strpos($_SERVER['REQUEST_URI'], $cat) !== false){
+        //     add_action('wp_enqueue_scripts', [$this, 'viAssets']);
+        //     }
+        // }
         add_action('wp_enqueue_scripts', [$this, 'viAssets']);
-        }
         add_action('admin_menu', [$this, 'viAddPage']);
         add_action('vivehicles', [$this, 'viVehicles']);
         add_action( 'wp_ajax_viDeleteAttachment', [$this, 'viDeleteAttachment']);
@@ -67,7 +73,7 @@ class Init
             add_rewrite_rule('^'.$this->vi_slug.'/?([^/]*)/?', 'index.php?'.$this->vi_slug.'=$matches[1]', 'top');
         } );
 
-        add_action( 'template_redirect', function(){
+        add_action('template_redirect', function(){
             $inventory = get_query_var( $this->vi_slug );
             if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
                 include $this->viPath . '/template/inventory.php';
@@ -77,7 +83,75 @@ class Init
                 die;
             }
         } );
+
+        // add_filter('query_vars', function( $query_vars ){
+        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+        //     // $query_vars[] = $this->vi_slug;
+        //     foreach($cats as $cat){
+        //         $query_vars[] = $cat;
+        //     }
+        //     return $query_vars;
+        // } );
+
+        // add_action('init',  function() {
+        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+        //     foreach($cats as $cat){
+        //         add_rewrite_rule('^'.$cat.'/?([^/]*)/?', 'index.php?'.$cat.'=$matches[1]', 'top');
+        //     }
+        // });
+
+        // add_action('template_redirect', function(){
+        //     $inventory = get_query_var( $this->vi_slug );
+        //     if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
+        //         include $this->viPath . '/template/inventory.php';
+        //         die;
+        //     }elseif($inventory){
+        //         include $this->viPath . '/template/details.php';
+        //         die;
+        //     }
+        // });
+
+        // add_action( 'template_redirect', function(){
+        //     $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+        //     foreach($cats as $cat){
+        //         $inventory = get_query_var( $cat );
+        //         if(strpos($_SERVER['REQUEST_URI'], $cat) !== false && empty($inventory)){
+        //             include $this->viPath . '/template/inventory.php';
+        //             die;
+        //         }elseif($inventory){
+        //             include $this->viPath . '/template/details.php';
+        //             die;
+        //         }
+        //     }
+        // });
+
+        // ShortCode
+        add_action( 'init', [$this, 'viShortcodes_init'] );
+
     }
+
+    public function viShortcodes_init(){
+        add_shortcode( 'inventory', [$this, 'viShortcode'] );
+    }
+
+    public function viShortcode( $cat = 'rvs-for-sale-everett') {
+        $catpages = ['class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','motorhomes'=>'Motorhomes','travel-trailers'=>'Travel Trailers'];
+        $atts = shortcode_atts( array(
+            'rvcat' => $cat
+        ), $cat, 'inventory' );
+        $vehicles = new Vehicle();
+        $rvcat = $vehicles->viBuildSlug($atts['rvcat']);
+
+        $category = $rvcat;
+        if (array_key_exists($rvcat,$catpages)){
+            $category = $catpages[$rvcat];
+        }
+       
+        $output = $vehicles->viShortcodeList($category);
+        // return output
+        return $output;
+    }
+
 
     public function viAddPage()
     {
@@ -142,7 +216,6 @@ class Init
         wp_enqueue_script('scripts-js', $this->viUrl.'/assets/scripts.js', array(), false, true);
         wp_enqueue_style('styles', $this->viUrl.'/assets/styles.css');
     }
-
     
     public function viDeleteAttachment() {
         $data['id'] = $_REQUEST['post_id'];
@@ -278,7 +351,6 @@ class Init
         //return $links;
     }
     
-
     public function viActivate()
     {
         global $vi_db_version;

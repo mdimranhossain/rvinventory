@@ -1,7 +1,7 @@
 <?php
 /*
 * Setting
-* @Package: VehicleInventory
+* @Package: rvinventory
 */
 
 declare(strict_types=1);

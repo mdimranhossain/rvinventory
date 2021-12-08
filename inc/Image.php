@@ -1,7 +1,7 @@
 <?php
 /*
 * Image
-* @Package: VehicleInventory
+* @Package: rvinventory
 */
 
 declare(strict_types=1);

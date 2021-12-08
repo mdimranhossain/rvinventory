@@ -1,7 +1,7 @@
 <?php
 /*
 * checkslug
-* @Package: RVInventory
+* @Package: rvinventory
 */
 
 declare(strict_types=1);

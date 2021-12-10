@@ -97,7 +97,7 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 			</div> 
 			</div>
 		</div>
-		<div class="col-sm-4 sidebar">
+		<div class="col-sm-4 sidebar dealer">
 			<h4>
 				<?php
 

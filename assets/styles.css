@@ -95,13 +95,13 @@
 .dealer h4{
   padding: 20px 10px;
 }
-.dealer a{
+.dealer .btn, .dealer .btn:visited{
   margin-top: 20px;
   padding: 10px 20px;
   background: #ed2025;
   color: #fff;
 }
-.dealer a:hover{
+.dealer .btn:hover{
   background:#da5555;
   color: #fff;
   text-decoration: none;

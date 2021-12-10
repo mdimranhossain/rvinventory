@@ -44,7 +44,7 @@ class Vehicle
             $offset = 0;
         }
         
-        $query = $this->db->prepare("SELECT * FROM {$table} WHERE $where ORDER BY id DESC LIMIT $offset,$per_page", $rvcat);
+        $query = $this->db->prepare("SELECT * FROM {$table} WHERE $where ORDER BY year DESC LIMIT $offset,$per_page", $rvcat);
         //echo $query;
         $vehicles = $this->db->get_results($query);
 
@@ -68,7 +68,7 @@ class Vehicle
             $offset = 0;
         }
         
-        $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY id DESC LIMIT ".$offset.",".$per_page;
+        $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
         //echo $query;
         $vehicles = $this->db->get_results($query);
         // return $vehicles;
@@ -179,22 +179,14 @@ class Vehicle
         $input = $_POST;
         $data['post'] = $_POST;
         $data['insert'] = [
+            'year' => $input['year'],
             'make' => $input['make'],
             'model' => $input['model'],
-            'additional' => $input['additional'],
             'slug' => $input['slug'],
+            'mileage' => $input['mileage'],
             'salePrice' => $input['salePrice'],
-            'msrp' => $input['msrp'],
             'description' => $input['description'],
-            'vehicleCondition' => $input['vehicleCondition'],
-            'payloadCapacity' => $input['payloadCapacity'],
-            'emptyWeight' => $input['emptyWeight'],
-            'floorLength' => $input['floorLength'],
-            'floorWidth' => $input['floorWidth'],
-            'sideHeight' => $input['sideHeight'],
-            'bodyType' => $input['bodyType'],
             'rvCategory' => $input['rvCategory'],
-            'addtionalInfo' => $input['addtionalInfo'],
             'featuredImage' => $input['featuredImage'],
             'featuredid' => $input['featuredid'],
             'gallery' => $input['gallery'],
@@ -203,7 +195,8 @@ class Vehicle
             'createdBy' => $input['createdBy'],
             'createdAt' => $input['createdAt']
         ];
-        $format = array('%s','%s','%s','%d','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%d','%s','%s');
+        $format = ['%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%d','%s','%s'];
+
         $data['success'] = $this->db->insert($this->table,$data['insert'],$format);
 
         if($data['success']){
@@ -220,10 +213,14 @@ class Vehicle
     // Vehicle Slug
     public function viSlug(): string
     {
+        $data['year'] = '';
         $data['make'] = '';
         $data['model'] = '';
-        $data['additional'] = '';
         $data['slug'] = '';
+        if(!empty($_REQUEST['make'])){
+            $data['year'] = trim($_REQUEST['year']);
+            $data['slug'] = $this->viBuildSlug($data['year']);
+        }
         if(!empty($_REQUEST['make'])){
             $data['make'] = trim($_REQUEST['make']);
             $data['slug'] = $this->viBuildSlug($data['make']);
@@ -231,10 +228,6 @@ class Vehicle
         if(!empty($_REQUEST['model'])){
             $data['model'] = trim($_REQUEST['model']);
             $data['slug'] .= '-'.$this->viBuildSlug($data['model']);
-        }
-        if(!empty($_REQUEST['additional'])){
-            $data['additional'] = trim($_REQUEST['additional']);
-            $data['slug'] .= '-'.$this->viBuildSlug($data['additional']);
         }
 
         $data['count'] = $this->db->get_var("SELECT COUNT('id') FROM ".$this->table." WHERE slug LIKE '%".$data['slug']."%'");
@@ -262,29 +255,21 @@ class Vehicle
         $input = $_POST;
         $id = $input['id'];
         $data['update'] = [
+            'year' => $input['year'],
             'make' => $input['make'],
             'model' => $input['model'],
-            'additional' => $input['additional'],
             'slug' => $input['slug'],
+            'mileage' => $input['mileage'],
             'salePrice' => $input['salePrice'],
-            'msrp' => $input['msrp'],
             'description' => $input['description'],
-            'vehicleCondition' => $input['vehicleCondition'],
-            'payloadCapacity' => $input['payloadCapacity'],
-            'emptyWeight' => $input['emptyWeight'],
-            'floorLength' => $input['floorLength'],
-            'floorWidth' => $input['floorWidth'],
-            'sideHeight' => $input['sideHeight'],
-            'bodyType' => $input['bodyType'],
             'rvCategory' => $input['rvCategory'],
-            'addtionalInfo' => $input['addtionalInfo'],
             'featuredImage' => $input['featuredImage'],
             'featuredid' => $input['featuredid'],
             'gallery' => $input['gallery'],
             'galleryfiles' => $input['galleryfiles'],
             'status' => $input['status'],
-            'updatedBy' => $input['createdBy'],
-            'updatedAt' => $input['createdAt']
+            'createdBy' => $input['createdBy'],
+            'createdAt' => $input['createdAt']
         ];
 
         $where = [ 'id' => $id ];
@@ -300,7 +285,7 @@ class Vehicle
        return json_encode($data);
     }
 
-    public function viDetails(string $id)
+    public function viDetails($id)
     {
         $result = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE id = %d", $id));
         return $result;

@@ -6,6 +6,7 @@ get_header();
 
 $slug = get_option('vi_slug');
 $slug = get_query_var($slug);
+
 $emailfriend = get_option('vi_emailfriend');
 $availability = get_option('vi_availability');
 $contact_dealer = get_option('vi_contact_dealer');
@@ -19,8 +20,8 @@ global $wpdb;
 $table = $wpdb->prefix.'inventory';
 $query = $wpdb->prepare("SELECT * FROM {$table} WHERE slug='%s'", $slug);
 $vehicle = $wpdb->get_row($query);
-$vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
-//print_r($vehicle);
+$vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
+// print_r($vehicle);
 //echo "Best Built Inventory Details Page";
 ?>
 <script>document.title = "<?php echo $vehicleTitle; ?>";</script>
@@ -42,8 +43,8 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 									
 									?>
 									<li>
-										<a data-fancybox="gallery" data-caption="<?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?>" href="<?php echo esc_url($image); ?>">
-											<img src="<?php echo esc_url($image); ?>" alt="<?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?>" />
+										<a data-fancybox="gallery" data-caption="<?php echo $vehicle->year.' '.$vehicle->make.' '.$vehicle->model; ?>" href="<?php echo esc_url($image); ?>">
+											<img src="<?php echo esc_url($image); ?>" alt="<?php echo $vehicle->year.' '.$vehicle->make.' '.$vehicle->model; ?>" />
 										</a>
 									</li>
 								<?php endforeach; ?>
@@ -62,7 +63,7 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 								<?php endforeach; ?>
 							</ul>
 					<?php } ?>
-					<!-- <img src="<?php //echo $vehicle->featuredImage; ?>" alt="" class="img-fluid" /> -->
+				
 				</div>
 			
 			</div>
@@ -70,22 +71,10 @@ $vehicleTitle = $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional;
 			<div class="row bg-white rounded">
 				<div class="col-sm-12">
 					<h4 class="pt-2 pb-2 mt-2 bg-grey rounded text-center">Details</h4>
-					<h4 class="pt-2 pb-2"><?php echo $vehicle->make.' '.$vehicle->model.' '.$vehicle->additional; ?></h4>
-					<!-- <ul class="ml-4">
-						<li>Condition: <?php //echo stripslashes($vehicle->vehicleCondition); ?></li>
-						<li>Payload capacity: <?php //echo stripslashes($vehicle->payloadCapacity); ?></li>
-						<li>Empty weight: <?php //echo stripslashes($vehicle->emptyWeight); ?></li>
-						<li>Floor length: <?php //echo stripslashes($vehicle->floorLength); ?></li>
-						<li>Floor width: <?php //echo stripslashes($vehicle->floorWidth); ?></li>
-						<li>Side height: <?php //echo stripslashes($vehicle->sideHeight); ?></li>
-						<li>Body type: <?php //echo stripslashes($vehicle->bodyType); ?></li>
-					</ul> -->
+					<h4 class="pt-2 pb-2"><?php echo $vehicle->year.' '.$vehicle->make.' '.$vehicle->model; ?></h4>
+					
 				</div>
-				<!-- <div class="col-sm-12 m-3">
-					<h5 class="pt-2 pb-2">Additional Information:</h5>
-					<p><?php //echo nl2br(htmlentities($vehicle->addtionalInfo, ENT_QUOTES, 'UTF-8')); ?></p>
-				</div> -->
-
+			
 				<div class="col-sm-12">
 					<p><?php echo $vehicle->description; ?></p>
 				</div>

@@ -1,6 +1,6 @@
 /*
  * Styles
- * @Package: RVInventory
+ * @Package: rvinventory
  */
 
 #vehiclelist{
@@ -20,6 +20,7 @@
 #tabs{
   padding-left: 0;
   padding-right: 0;
+  background:#222;
 }
 .addnewtop,
 .addnewbottom,

@@ -64,11 +64,20 @@
 .dealer a{
   margin-top: 20px;
   padding: 10px 20px;
-}
-.dealer a:hover{
   background: #ed2025;
   color: #fff;
+}
+.dealer a:hover{
+  color: #007bff;
   text-decoration: none;
+}
+
+#inventory .phone a{
+  font-size: 26px;
+}
+
+#inventory .print{
+  cursor: pointer;
 }
 
 .slider{
@@ -150,6 +159,9 @@
 }
 .bg-grey{
   background: #ececec;
+}
+.hidden{
+  display: none;
 }
 @media screen and (max-width:812px) {
     .pager img{

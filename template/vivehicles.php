@@ -76,11 +76,11 @@ $vehicles = $wpdb->get_results($query);
 
 					<th>Sale Price</th>
 
-					<th>MSRP</th>
+	
 
 					<th>Description</th>
 
-					<th>Condition</th>
+					<th>Category</th>
 
 					<th>Actions</th>
 
@@ -96,12 +96,9 @@ $vehicles = $wpdb->get_results($query);
 
 				foreach($vehicles as $vehicle){
 
-					echo '<tr id="row'.$vehicle->id.'"><td><a target="_blank" class="dlink" dataid="'.$vehicle->id.'" href="/'.$slug.'/'.$vehicle->slug.'">'.$vehicle->make.' '.$vehicle->model.' '.$vehicle->additional.'</a></td><td>'.$vehicle->salePrice.'</td><td>'.$vehicle->msrp.'</td><td>'.$vehicle->description.'</td><td>'.$vehicle->vehicleCondition.'</td><td><a href="/wp-admin/admin.php?page=viedit&id='.$vehicle->id.'" type="button" class="btn btn-warning btn-sm btn-edit" title="Edit" ><i class="fa fa-pencil"></i></a><button data-toggle="modal" data-target="#deletemodal" data-id="'.$vehicle->id.'" data-featured="'.$vehicle->featuredid.'" data-gallery="'.rtrim($vehicle->galleryfiles,',').'" type="button" title="Delete" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button></td></tr>';
-
+					echo '<tr id="row'.$vehicle->id.'"><td><a target="_blank" class="dlink" dataid="'.$vehicle->id.'" href="/'.$slug.'/'.$vehicle->slug.'">'.$vehicle->year.' '.$vehicle->make.' '.$vehicle->model.'</a></td><td>'.$vehicle->salePrice.'</td><td>'.$vehicle->description.'</td><td>'.$vehicle->rvCategory.'</td><td><a href="/wp-admin/admin.php?page=viedit&id='.$vehicle->id.'" type="button" class="btn btn-warning btn-sm btn-edit" title="Edit" ><i class="fa fa-pencil"></i></a><button data-toggle="modal" data-target="#deletemodal" data-id="'.$vehicle->id.'" data-featured="'.$vehicle->featuredid.'" data-gallery="'.rtrim($vehicle->galleryfiles,',').'" type="button" title="Delete" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button></td></tr>';
 				}
-
 			}
-
 			?>
 
 			</tbody>
@@ -114,11 +111,9 @@ $vehicles = $wpdb->get_results($query);
 
                     <th>Sale Price</th>
 
-                    <th>MSRP</th>
-
                     <th>Description</th>
 
-                    <th>Condition</th>
+                    <th>Category</th>
 
                     <th>Actions</th>
 
@@ -131,18 +126,6 @@ $vehicles = $wpdb->get_results($query);
 	</div>
 
 </div>
-
-
-
-<?php
-
-//    $nonce = wp_create_nonce("viDeleteAttachment");
-
-//     $link = admin_url('admin-ajax.php?action=viDeleteAttachment&post_id=11&nonce='.$nonce);
-
-//     echo '<a class="viDelete" target="_blank" data-nonce="' . $nonce . '" data-post_id="11" href="' . $link . '">Delete</a>';
-
-?>
 
 
 
@@ -210,10 +193,7 @@ $vehicles = $wpdb->get_results($query);
 
                 });
 
-	
-
 	// delete action
-
 	$(document).on('click','.btn-delete', function() {
 
         var modaltitle = "Delete Vehicle";
@@ -233,11 +213,7 @@ $vehicles = $wpdb->get_results($query);
         $('#deletemodal #galleryfiles').attr('value',gallery);
 
         // console.log(modaltitle);
-
     });
-
-
-
 
 
     $('#deleteform').on('submit', function(e) {
@@ -300,11 +276,7 @@ $vehicles = $wpdb->get_results($query);
 
                         html = '<div class="alert alert-success">' + data.message.image + '</div>';
 
-
-
                         $('.message .image').html(html);
-
-
 
                         setTimeout(function () {
 
@@ -320,13 +292,9 @@ $vehicles = $wpdb->get_results($query);
 
                         html = '<div class="alert alert-success">' + data.message.inventory + '</div>';
 
-
-
                         $('.message .inventory').html(html);
 
                         $('.message .inventory').show(500);
-
-
 
                         setTimeout(function () {
 
@@ -341,8 +309,6 @@ $vehicles = $wpdb->get_results($query);
             }
 
         });
-
-
 
     });
 

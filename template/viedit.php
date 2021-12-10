@@ -87,7 +87,7 @@ function viurl(string $viLink){
             <option value="Fifth Wheels">Fifth Wheels</option>
             <option value="Motorhomes">Motorhomes</option>
             <option value="Travel Trailers">Travel Trailers</option>
-            <option value="Misc Inventory">Misc. Inventory</option>
+            <option value="Miscellaneous">Miscellaneous</option>
           </select>
         </div>
 

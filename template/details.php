@@ -25,6 +25,21 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 //echo "Best Built Inventory Details Page";
 ?>
 <script>document.title = "<?php echo $vehicleTitle; ?>";</script>
+<div class="bead">
+	<div class="container">
+	      <div class="text-center">
+		   <h1 class="entry-title"><?php echo $vehicleTitle;?></h1>
+	      </div>
+	</div>
+</div>
+<div class="sub_header_menu">
+	<?php wp_nav_menu( array(
+	    'theme_location' => 'quick',
+	    'container_class' => 'sub-header-link'
+	    )
+	);
+	?>
+</div>
 <div class="container bg-grey pt-2 pb-2">
 	<div class="row">
 		<div class="col-sm-8">
@@ -83,6 +98,16 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 			</div>
 		</div>
 		<div class="col-sm-4 sidebar">
+			<h4>
+				<?php
+
+				if(!empty($vehicle->salePrice) && $vehicle->salePrice>0){
+					echo "Price: $".number_format($vehicle->salePrice,2);
+				}else{
+					echo 'Call For Pricing';
+				}
+				?>
+			</h4>
 			<div class="buttons">
 				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $availability; ?>" href="javascript:;" id="" role="button">
 				<i class="fa fa-check-square-o"></i><span> Check Availability</span></a>

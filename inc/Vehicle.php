@@ -93,7 +93,7 @@ class Vehicle
             $output .= '<div class="vehicle container">'; //vehicle wrapper
             $output .= '<div class="row vehicle-title">
                     <div class="col-sm-6">
-                        <h3><a href="'.esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug.'">'.$vehicle->make.' '.$vehicle->model.' '.$vehicle->additional.'</a></h3>
+                        <h3><a href="'.esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug.'">'.$vehicle->year.' '.$vehicle->make.' '.$vehicle->model.'</a></h3>
                     </div>
                     <div class="col-sm-6">
                     <ul>
@@ -112,7 +112,7 @@ class Vehicle
                         foreach( $images as $image ){
                             $output .= '<li>
                                             <a href="'.esc_url($image).'">
-                                                <img src="'.esc_url($image).'" alt="'.$vehicle->make.' '.$vehicle->model.' '.$vehicle->additional.'" />
+                                                <img src="'.esc_url($image).'" alt="'.$vehicle->year.' '.$vehicle->make.' '.$vehicle->model.'" />
                                             </a>
                                         </li>';
                         } // end foreach images

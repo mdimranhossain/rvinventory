@@ -31,6 +31,14 @@ $pageTitle = get_option('vi_pageTitle');
 	      </div>
 	</div>
 </div>
+<div class="sub_header_menu">
+	<?php wp_nav_menu( array(
+	    'theme_location' => 'quick',
+	    'container_class' => 'sub-header-link'
+	    )
+	);
+	?>
+</div>
 
 <div id="inventory">
 	<?php

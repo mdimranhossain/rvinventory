@@ -184,18 +184,18 @@ $pageTitle = get_option('vi_pageTitle');
 	}
 
 	$(document).ready(function(){
-		$('.print').click(function(){
+		$(document).on('click','.print',function(){
 			var id = $(this).data('id');
-			var details = "<?php echo viurl("/vehicle_details.php");?>";
-
+			var details = "<?php echo viurl('/vehicle_details.php');?>";
+	
 			$.ajax({
 				url: details+'?vehicle='+id,
-				method: "GET",
+				method: 'GET',
 				// data: {vehicle:id},
 				contentType: false,
 				cache: false,
 				processData: false,
-				dataType: "json",
+				dataType: 'json',
 				success: function(data){
 					var pyear = '';
 					var pmake = '';

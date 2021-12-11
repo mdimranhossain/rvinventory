@@ -27,6 +27,11 @@ class Vehicle
     //     return json_encode($vehicles);
     // }
 
+    public function viUrl(string $viLink): string
+    {
+        return plugins_url($viLink, dirname(__FILE__));
+    }
+
     public function viList(): string
     {
         $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
@@ -98,7 +103,7 @@ class Vehicle
                     <div class="col-sm-6">
                     <ul>
                         <li class="phone"><i class="fa fa-phone"></i> <a href="tel:'.$phone.'">'.$phone.'</a></li>
-                        <li class="print"> <a href="#"><i class="fa fa-print"></i></a> </li>
+                        <li data-id="'.$vehicle->id.'" class="print"> <i class="fa fa-print"></i> </li>
                     </ul>
                     </div>
                 </div>'; //vehicle title ends
@@ -157,6 +162,78 @@ class Vehicle
 			$('.pages ul li span.current').addClass('page-link');
 		});
 		</script>";
+
+        $output .='<div id="print" class="hidden">
+                        <div class="container">
+                            <div class="row"><div class="col-sm-12 text-center"><h1 id="ptitle"></h1></div></div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>Category: <span id="pcategory"></span></p>
+                                    <p>Mileage: <span id="pmileage"></span></p>
+                                    <p>Price: <span id="pprice"></span></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img class="img-fluid" id="pphoto" src="" alt="" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p id="pdescription">
+                    
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+        $output .="<script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+        $(document).ready(function(){
+            $(document).on('click','.print',function(){
+                var id = $(this).data('id');
+                var details = '".$this->viUrl('/vehicle_details.php')."';
+        
+                $.ajax({
+                    url: details+'?vehicle='+id,
+                    method: 'GET',
+                    // data: {vehicle:id},
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function(data){
+                        var pyear = '';
+                        var pmake = '';
+                        var pmodel = '';
+                        if(data.year){
+                            pyear = data.year;
+                        }
+                        if(data.make){
+                            pmake = data.make;
+                        }
+                        if(data.model){
+                            pmodel = data.model;
+                        }
+                        var ptitle = pyear+' '+pmake+' '+pmodel;
+                        $('#ptitle').text(ptitle);
+                        $('#pcategory').text(data.rvCategory);
+                        $('#pmileage').text(data.mileage);
+                        $('#pprice').text(data.salePrice);
+                        $('#pphoto').attr('src',data.featuredImage);
+                        $('#pdescription').text(data.description);
+    
+                        printDiv('print');
+                    }
+    
+                });
+            });
+        });</script>";
+
         $output .= '</div>';
         
         return $output;
@@ -168,9 +245,7 @@ class Vehicle
         if(!empty($rvcat)){
             $where = "rvCategory ='".$rvcat."'";
         }
-
         $total = intval($this->db->get_var('SELECT COUNT(id) FROM '.$this->table.' WHERE '.$where));
-
         return $total;
     }
 
@@ -217,14 +292,17 @@ class Vehicle
         $data['make'] = '';
         $data['model'] = '';
         $data['slug'] = '';
+
         if(!empty($_REQUEST['make'])){
             $data['year'] = trim($_REQUEST['year']);
             $data['slug'] = $this->viBuildSlug($data['year']);
         }
+
         if(!empty($_REQUEST['make'])){
             $data['make'] = trim($_REQUEST['make']);
             $data['slug'] = $this->viBuildSlug($data['make']);
         }
+
         if(!empty($_REQUEST['model'])){
             $data['model'] = trim($_REQUEST['model']);
             $data['slug'] .= '-'.$this->viBuildSlug($data['model']);
@@ -235,9 +313,12 @@ class Vehicle
         if($data['count']>0){
             $data['slug'] = $data['slug'].'-'.($data['count']+1);
         }
+
         $data['slug'] = strtolower($data['slug']);
+
        return json_encode($data);
     }
+
     // build vehicle slug
     public function viBuildSlug(string $string)
     {

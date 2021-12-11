@@ -5,7 +5,7 @@
 get_header(); 
 
 $slug = get_option('vi_slug');
-$slug = get_query_var($slug);
+$vslug = get_query_var($slug);
 
 $emailfriend = get_option('vi_emailfriend');
 $availability = get_option('vi_availability');
@@ -18,7 +18,7 @@ $weekend = get_option('vi_weekend');
 //echo $inventory;
 global $wpdb;
 $table = $wpdb->prefix.'inventory';
-$query = $wpdb->prepare("SELECT * FROM {$table} WHERE slug='%s'", $slug);
+$query = $wpdb->prepare("SELECT * FROM {$table} WHERE slug='%s'", $vslug);
 $vehicle = $wpdb->get_row($query);
 $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 // print_r($vehicle);

@@ -106,10 +106,12 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 				}else{
 					echo 'Call For Pricing';
 				}
+				$vfrom = $vehicle->year.'-'.$vehicle->make.'-'.$vehicle->model;
+				$vdetail = esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug;
 				?>
 			</h4>
 			<div class="buttons">
-				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $availability; ?>" href="javascript:;" id="" role="button">
+				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $availability.'?vehicle='.$vfrom.'&vehicle_url='.$vdetail;?>" href="javascript:;" id="" role="button">
 				<i class="fa fa-check-square-o"></i><span> Check Availability</span></a>
 				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $emailfriend; ?>" href="javascript:;" id="" role="button">
 				<i class="fa fa-envelope-o"></i><span> Email a Friend</span></a>

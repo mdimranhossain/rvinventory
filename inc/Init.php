@@ -99,7 +99,7 @@ class Init
     }
 
     public function viShortcode( $cat = 'rvs-for-sale-everett') {
-        $catpages = ['class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','motorhomes'=>'Motorhomes','travel-trailers'=>'Travel Trailers'];
+        $catpages = ['class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','class-a-rvs'=>'Class A RVs','travel-trailers'=>'Travel Trailers'];
         $atts = shortcode_atts( array(
             'rvcat' => $cat
         ), $cat, 'inventory' );

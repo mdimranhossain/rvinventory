@@ -293,14 +293,14 @@ class Vehicle
         $data['model'] = '';
         $data['slug'] = '';
 
-        if(!empty($_REQUEST['make'])){
+        if(!empty($_REQUEST['year'])){
             $data['year'] = trim($_REQUEST['year']);
             $data['slug'] = $this->viBuildSlug($data['year']);
         }
 
         if(!empty($_REQUEST['make'])){
             $data['make'] = trim($_REQUEST['make']);
-            $data['slug'] = $this->viBuildSlug($data['make']);
+            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
         }
 
         if(!empty($_REQUEST['model'])){

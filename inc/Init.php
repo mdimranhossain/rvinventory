@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Inc;
 
 use Inc\Vehicle as Vehicle;
+use Inc\Image as Image;
 
 class Init
 {
@@ -65,6 +66,8 @@ class Init
         add_action( 'wp_ajax_viDeleteAttachment', [$this, 'viDeleteAttachment']);
         
         add_action( 'wp_ajax_viUpload', [$this, 'viUpload']);
+        add_action( 'wp_ajax_viSlug',[$this,'viSlug']);
+        add_action( 'wp_ajax_viDragDrop',[$this,'viDragDrop']);
 
         add_filter( 'query_vars', function( $query_vars ){
             $query_vars[] = $this->vi_slug;
@@ -284,6 +287,18 @@ class Init
         }
         echo json_encode($data);
         die();
+    }
+
+    public function viSlug(){
+        $vehicle = new Vehicle();
+        echo $vehicle->viSlug();
+        wp_die();
+    }
+
+    public function viDragDrop(){
+        $image = new Image(); 
+        echo !empty($_FILES['file'])?$image->multiupload():"No file found!";
+        wp_die();
     }
 
     public function viVehicles()

@@ -85,7 +85,7 @@ function viurl(string $viLink){
           <option value="Class C RVs">Class C RVs</option>
             <option value="Campers">Campers</option>
             <option value="Fifth Wheels">Fifth Wheels</option>
-            <option value="Motorhomes">Motorhomes</option>
+            <option value="Class A RVs">Class A RVs</option>
             <option value="Travel Trailers">Travel Trailers</option>
             <option value="Miscellaneous">Miscellaneous</option>
           </select>
@@ -95,12 +95,12 @@ function viurl(string $viLink){
             <label for="mileage" class="control-label">Mileage</label>
             <input type="text" name="mileage" id="mileage" class="form-control"
                 value="<?php echo !empty($vehicle->mileage)?$vehicle->mileage:'';?>"
-                placeholder="60000" />
+                placeholder="1000" />
         </div>
 
         <div class="form-group">
           <label for="salePrice" class="control-label">Sale Price</label>
-          <input type="text" name="salePrice" id="salePrice" class="form-control" value="<?php echo (!empty($vehicle->salePrice) || $vehicle->salePrice > 0)?$vehicle->salePrice:'';?>" placeholder="0.00" />
+          <input type="text" name="salePrice" id="salePrice" class="form-control" value="<?php echo (!empty($vehicle->salePrice) && $vehicle->salePrice > 0)?$vehicle->salePrice:'';?>" placeholder="0" />
         </div>
 
         <div class="form-group">
@@ -176,8 +176,10 @@ function viurl(string $viLink){
         </div> 
         <div class="form-group">
           <input type="hidden" name="createdBy" id="createdBy" value="<?php echo get_current_user_id();?>" />
-          <input type="hidden" name="createdAt" id="createdAt" value="<?php echo date('Y-m-d H:i:s'); ?>" />
+          <input type="hidden" name="createdAt" id="createdAt" value="<?php echo date('Y-m-d H:i:s');?>" />
           <input type="hidden" name="vehicle" id="vehicle" value="update" />
+          <input type="hidden" name="action" id="action" value="" />
+          <?php wp_nonce_field( 'update-vehicle_'.time());?>
           <button type="button" id="vipublish" class="btn btn-primary btn-sm">Update</button>
         </div>
       </div>
@@ -190,7 +192,9 @@ function viurl(string $viLink){
 </div>
 <script>
 function checkslug(){
-      var endpoint = "<?php echo viurl("/checkslug.php");?>";
+      var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+      //var endpoint = "<?php //echo viurl("/checkslug.php");?>";
+      jQuery('#action').val('viSlug');
       jQuery.ajax({
             url:endpoint,
             method: "POST",
@@ -199,12 +203,13 @@ function checkslug(){
             cache: false,
             processData: false,
             dataType: "json",
-            success: function(data) {
-                console.log(data);
-                jQuery('#slug').val(data.slug);
+            success: function(result) {
+                console.log(result);
+                jQuery('#slug').val(result.slug);
             }
         });
   }
+
   jQuery(document).ready(function($){
     $('#visave').on('click', function(e){
       e.preventDefault();
@@ -323,8 +328,10 @@ function checkslug(){
     // multiple select
     $('#ddgallery').on('change', function (e) {
       e.preventDefault();
+      jQuery('#action').val('viDragDrop');
       var formData = new FormData(document.getElementById('vehicleform'));
-      var endpoint = "<?php echo viurl("/dragdrop.php");?>";
+      // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+      var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
       $.ajax({
         url: endpoint,
         method: "POST",

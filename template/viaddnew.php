@@ -83,7 +83,7 @@ function viurl(string $viLink){
                                     <option value="Class C RVs">Class C RVs</option>
                                     <option value="Campers">Campers</option>
                                     <option value="Fifth Wheels">Fifth Wheels</option>
-                                    <option value="Motorhomes">Motorhomes</option>
+                                    <option value="Class A RVs">Class A RVs</option>
                                     <option value="Travel Trailers">Travel Trailers</option>
                                     <option value="Miscellaneous">Miscellaneous</option>
                                 </select>
@@ -91,14 +91,14 @@ function viurl(string $viLink){
                             <div class="form-group">
                                 <label for="mileage" class="control-label">Mileage</label>
                                 <input type="text" name="mileage" id="mileage" class="form-control"
-                                    value="<?php echo !empty($vehicle->mileage)?$vehicle->mileage:'';?>"
-                                    placeholder="60000" />
+                                    value=""
+                                    placeholder="1000" />
                             </div>
                             <div class="form-group">
                                 <label for="salePrice" class="control-label">Sale Price</label>
                                 <input type="text" name="salePrice" id="salePrice" class="form-control"
-                                    value="<?php echo !empty($vehicle->salePrice)?$vehicle->salePrice:'';?>"
-                                    placeholder="0.00" />
+                                    value="<?php echo (!empty($vehicle->salePrice) && $vehicle->salePrice>0)?$vehicle->salePrice:'';?>"
+                                    placeholder="0" />
                             </div>
                             <div class="form-group">
                                 <label for="description" class="control-label">Description</label>
@@ -159,12 +159,10 @@ function viurl(string $viLink){
                             <div class="form-group">
                                 <label for="status" class="control-label">Status</label>
                                 <select name="status" id="status" class="form-control">
-                                    <option value="0"
-                                        <?php echo (!empty($vehicle->status) && $vehicle->status==0)?'selected':'';?>>
-                                        Draft</option>
-                                    <option value="1"
-                                        <?php echo (!empty($vehicle->status) && $vehicle->status==1)?'selected':'';?>>
-                                        Publish</option>
+                                    <!-- <option value="0"
+                                        <?php //echo (!empty($vehicle->status) && $vehicle->status==0)?'selected':'';?>>
+                                        Draft</option> -->
+                                    <option value="1">Publish</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -173,6 +171,8 @@ function viurl(string $viLink){
                                 <input type="hidden" name="createdAt" id="createdAt"
                                     value="<?php echo date('Y-m-d H:i:s'); ?>" />
                                 <input type="hidden" name="vehicle" id="vehicle" value="create" />
+                                <input type="hidden" name="action" id="action" value="" />
+                                <?php wp_nonce_field( 'create-vehicle_'.time());?>
                                 <button type="submit" id="vipublish" class="btn btn-primary btn-sm">Publish</button>
                             </div>
                         </div>
@@ -188,23 +188,45 @@ function viurl(string $viLink){
 </div>
 <script>
 function checkslug() {
-    var endpoint = "<?php echo viurl("/checkslug.php");?>";
-    jQuery.ajax({
-        url: endpoint,
-        method: "POST",
-        data: new FormData(document.getElementById('vehicleform')),
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: "json",
-        success: function(data) {
-            console.log(data);
-            jQuery('#slug').val(data.slug);
-        }
-    });
+    var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+      //var endpoint = "<?php //echo viurl("/checkslug.php");?>";
+      jQuery('#action').val('viSlug');
+      jQuery.ajax({
+            url:endpoint,
+            method: "POST",
+            data: new FormData(document.getElementById('vehicleform')),
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: "json",
+            success: function(result) {
+                console.log(result);
+                jQuery('#slug').val(result.slug);
+            }
+        });
+    // var endpoint = "<?php //echo viurl('/vehicle.php');?>";
+    // var url = 'admin.php?page=viedit&id=';
+    // //console.log(url);
+    // jQuery.ajax({
+    //     url: endpoint,
+    //     method: "POST",
+    //     data: new FormData(document.getElementById('vehicleform')),
+    //     contentType: false,
+    //     cache: false,
+    //     processData: false,
+    //     dataType: "json",
+    //     success: function(data) {
+    //         console.log(data);
+    //         if (data.insertid) {
+    //             url += data.insertid;
+    //             location.href = url;
+    //         }
+    //     }
+    // });
+}
+function save() {
     var endpoint = "<?php echo viurl('/vehicle.php');?>";
     var url = 'admin.php?page=viedit&id=';
-    //console.log(url);
     jQuery.ajax({
         url: endpoint,
         method: "POST",
@@ -222,21 +244,7 @@ function checkslug() {
         }
     });
 }
-function save() {
-    var endpoint = "<?php echo viurl('/vehicle.php');?>";
-    jQuery.ajax({
-        url: endpoint,
-        method: "POST",
-        data: new FormData(document.getElementById('vehicleform')),
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: "json",
-        success: function(data) {
-            console.log(data);
-        }
-    });
-}
+
 jQuery(document).ready(function($) {
     $('#visave').on('click', function(e) {
         e.preventDefault();
@@ -337,11 +345,13 @@ jQuery(document).ready(function($) {
     // single drag drop
     $('.drop_area').on('drop', function(e) {
         e.preventDefault();
+        jQuery('#action').val('viDragDrop');
         $(this).removeClass('drag_over');
         var formData = new FormData();
         var files = e.originalEvent.dataTransfer.files;
         formData.append('file[0]', files[0]);
-        var endpoint = "<?php echo viurl("/dragdrop.php");?>";
+        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
             method: "POST",

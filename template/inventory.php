@@ -9,7 +9,7 @@ if(file_exists($viAutoload)){
 }
 $slug = get_option('vi_slug');
 // $catpages = ['rvs-for-sale-everett'=>'rvs-for-sale-everett','class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','motorhomes'=>'Motorhomes','travel-trailers'=>'Travel Trailers'];
-$cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+$cats = ['rvs-for-sale-everett','class-a-rvs','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
 // foreach($catpages as $key=>$val){
 // 	$inventory = get_query_var($key);
 //     if(strpos($_SERVER['REQUEST_URI'], $key) == true && !empty($inventory)){

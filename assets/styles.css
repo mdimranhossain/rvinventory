@@ -216,4 +216,16 @@
       font-family: var(--secondary-font-body);
       border-radius: 100px;
   }
+  .dealer h4{
+      padding: 10px 10px;
+      font-weight: bold;
+      font-size: 2rem;
+  }
+  .vehicle .phone, .vehicle .print{
+    display: none;
+  }
+  .vehicle h3{
+    text-align: center;
+    font-weight: bold;
+  }
 }

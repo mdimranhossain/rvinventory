@@ -154,8 +154,8 @@ class Init
         $home = get_option('home');
         $blogname = get_option('blogname');
         $blogdescription = get_option('blogdescription');
-        $seoTitle = stripslashes(get_option('vi_seoTitle'));
-        $seoDescription = stripslashes(get_option('vi_seoDescription'));
+        $seoTitle = !empty(get_option('vi_seoTitle'))?stripslashes(get_option('vi_seoTitle')):'';
+        $seoDescription = !empty(get_option('vi_seoDescription'))?stripslashes(get_option('vi_seoDescription')):'';
         $vehicles = new Vehicle();
         $vehicle = $vehicles->viDetails($inventory);
 

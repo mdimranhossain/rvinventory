@@ -72,8 +72,8 @@ class Setting
         update_option('vi_weekend', $weekend);
         
         $data['slug'] = get_option('vi_slug');
-        $data['seoTitle'] = stripslashes(get_option('vi_seoTitle'));
-        $data['seoDescription'] = stripslashes(get_option('vi_seoDescription'));
+        $data['seoTitle'] = !empty(get_option('vi_seoTitle'))?stripslashes(get_option('vi_seoTitle')):'';
+        $data['seoDescription'] = !empty(get_option('vi_seoDescription'))?stripslashes(get_option('vi_seoDescription')):'';
         $data['pageTitle'] = get_option('vi_pageTitle');
         $data['emailfriend'] = get_option('vi_emailfriend');
         $data['availability'] = get_option('vi_availability');
@@ -93,8 +93,8 @@ class Setting
     public function viInventoryOptions(): array
     {
         $data['slug'] = get_option('vi_slug');
-        $data['seoTitle'] = stripslashes(get_option('vi_seoTitle'));
-        $data['seoDescription'] = stripslashes(get_option('vi_seoDescription'));
+        $data['seoTitle'] = !empty(get_option('vi_seoTitle'))?stripslashes(get_option('vi_seoTitle')):'';
+        $data['seoDescription'] = !empty(get_option('vi_seoDescription'))?stripslashes(get_option('vi_seoDescription')):'';
         $data['pageTitle'] = get_option('vi_pageTitle');
         $data['emailfriend'] = get_option('vi_emailfriend');
         $data['availability'] = get_option('vi_availability');

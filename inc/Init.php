@@ -20,10 +20,16 @@ class Init
     private $table;
     private $imageTable;
     private $vi_slug;
+    private $vi_seoTitle;
+    private $vi_seoDescription;
     private $vi_emailfriend;
     private $vi_availability;
     private $vi_contact_dealer;
     private $vi_address;
+    private $vi_city;
+    private $vi_state;
+    private $vi_zip;
+    private $vi_areas;
     private $vi_phone;
     private $vi_weekday;
     private $vi_saturday;
@@ -40,10 +46,16 @@ class Init
         $this->viPath = dirname(__FILE__, 2);
         
         $this->vi_slug = !empty(get_option('vi_slug'))?get_option('vi_slug'):'inventory';
+        $this->vi_seoTitle = !empty(get_option('vi_seoTitle'))?get_option('vi_seoTitle'):'';
+        $this->vi_seoDescription = !empty(get_option('vi_seoDescription'))?get_option('vi_seoDescription'):'';
         $this->vi_emailfriend = !empty(get_option('vi_emailfriend'))?get_option('vi_emailfriend'):'';
         $this->vi_availability = !empty(get_option('vi_availability'))?get_option('vi_availability'):'';
         $this->vi_contact_dealer = !empty(get_option('vi_contact_dealer'))?get_option('vi_contact_dealer'):'/contact';
-        $this->vi_address = !empty(get_option('vi_address'))?get_option('vi_address'):'';
+        $this->vi_address = !empty(get_option('vi_address'))?get_option('vi_address'):'13425 Hwy 99';
+        $this->vi_city = !empty(get_option('vi_city'))?get_option('vi_city'):'Everett';
+        $this->vi_state = !empty(get_option('vi_state'))?get_option('vi_state'):'WA';
+        $this->vi_zip = !empty(get_option('vi_zip'))?get_option('vi_zip'):'98204';
+        $this->vi_areas = !empty(get_option('vi_areas'))?get_option('vi_areas'):'Bellevue, Seattle';
         $this->vi_phone = !empty(get_option('vi_phone'))?get_option('vi_phone'):'';
         $this->vi_weekday = !empty(get_option('vi_weekday'))?get_option('vi_weekday'):'';
         $this->vi_saturday = !empty(get_option('vi_saturday'))?get_option('vi_saturday'):'';
@@ -78,6 +90,12 @@ class Init
             add_rewrite_rule('^'.$this->vi_slug.'/?([^/]*)/?', 'index.php?'.$this->vi_slug.'=$matches[1]', 'top');
         } );
 
+
+        //add_filter( 'aioseo_disable_title_rewrites', [$this,'viChangeSeoTitle'] );
+        add_filter( 'aioseo_disable', [$this,'viDisableMeta'] );
+
+        add_filter('pre_get_document_title',  [$this,'viPageTitle'], 9999);
+
         add_action('template_redirect', function(){
             $inventory = get_query_var( $this->vi_slug );
             if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
@@ -87,13 +105,85 @@ class Init
                 include $this->viPath . '/template/details.php';
                 die;
             }
+            
         } );
 
-        // ShortCode
+        // init ShortCode
         add_action( 'init', [$this, 'viShortcodes_init'] );
 
+        // assign meta tags
+        add_action( 'wp_head', [$this,'viAddMetaTags']);
+        
     }
 
+    // change seo title
+
+    // public function viChangeSeoTitle(){
+    //     $inventory = get_query_var( $this->vi_slug );
+    //     if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+        // disable aioseo
+    public function viDisableMeta($disabled) {
+        $inventory = get_query_var( $this->vi_slug );
+        if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug)) {
+            return true;
+        }
+        return false;
+    }
+    // seo data
+    public function viPageTitle(){
+        $inventory = get_query_var( $this->vi_slug );
+        $seoTitle = stripslashes(get_option('vi_seoTitle'));
+        if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
+            return $seoTitle;
+        }elseif($inventory){
+            $vehicles = new Vehicle();
+            $vehicle = $vehicles->viDetails($inventory);
+            $title = $vehicle->rvCategory.' '.$vehicle->year.' '.$vehicle->make.' '.$vehicle->model.' For Sale '.$this->vi_city.', '.$this->vi_areas;
+            return $title;
+        }
+    }
+
+    public function viAddMetaTags(){
+        $inventory = get_query_var( $this->vi_slug );
+        $slug = get_option('vi_slug');
+        $home = get_option('home');
+        $blogname = get_option('blogname');
+        $blogdescription = get_option('blogdescription');
+        $seoTitle = stripslashes(get_option('vi_seoTitle'));
+        $seoDescription = stripslashes(get_option('vi_seoDescription'));
+        $vehicles = new Vehicle();
+        $vehicle = $vehicles->viDetails($inventory);
+
+        if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
+            $meta = '<meta name="description" content="'.$seoDescription.'" />';
+            $meta .= '<meta property="og:site_name" content="'.$blogname.' - '.$blogdescription.'" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="'.$seoTitle.'" />
+            <meta property="og:description" content="'.$seoDescription.'" />
+            <meta property="og:url" content="'.$home.'/'.$slug.'/" />';
+            
+            echo $meta;
+        }elseif($inventory){
+            $title = $vehicle->rvCategory.' '.$vehicle->year.' '.$vehicle->make.' '.$vehicle->model.' For Sale '.$this->vi_city.', '.$this->vi_areas;
+            $details = "Check out this great looking ".$vehicle->rvCategory." ".$vehicle->year.", ".$vehicle->make." ".$vehicle->model." for sale at ".$blogname." in ".$this->vi_city.", ".$this->vi_state." serving the greater ".$this->vi_areas." area.";
+            $meta = '<meta name="description" content="'.$details.'" />';
+            $meta .= '<meta property="og:site_name" content="'.$blogname.' - '.$blogdescription.'" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="'.$title.'" />
+            <meta property="og:description" content="'.$details.'" />
+            <meta property="og:url" content="'.$home.'/'.$slug.'/'.$vehicle->slug.'" />';
+            
+            echo $meta;
+        }
+    }
+    
+
+    // generate shortcode
     public function viShortcodes_init(){
         add_shortcode( 'inventory', [$this, 'viShortcode'] );
     }
@@ -112,11 +202,11 @@ class Init
         }
        
         $output = $vehicles->viShortcodeList($category);
-        // return output
+
         return $output;
     }
 
-
+    // admin pages
     public function viAddPage()
     {
         add_menu_page(
@@ -333,6 +423,10 @@ class Init
         $vi_db_version = '1.0';
         global $vi_slug;
         $vi_slug = $this->vi_slug;
+        global $vi_seoTitle;
+        $vi_seoTitle = $this->vi_seoTitle;
+        global $vi_seoDescription;
+        $vi_seoDescription = $this->vi_seoDescription;
         global $vi_emailfriend;
         $vi_emailfriend = $this->vi_emailfriend;
         global $vi_availability;
@@ -341,6 +435,14 @@ class Init
         $vi_contact_dealer = $this->vi_contact_dealer;
         global $vi_address;
         $vi_address = $this->vi_address;
+        global $vi_city;
+        $vi_city = $this->vi_city;
+        global $vi_state;
+        $vi_state = $this->vi_state;
+        global $vi_zip;
+        $vi_zip = $this->vi_zip;
+        global $vi_areas;
+        $vi_areas = $this->vi_areas;
         global $vi_phone;
         $vi_phone = $this->vi_phone;
         global $vi_weekday;
@@ -363,10 +465,16 @@ class Init
 	    add_option( 'vi_db_version', $vi_db_version );
 
         add_option( 'vi_slug', $vi_slug );
+        add_option( 'vi_seoTitle', $vi_seoTitle );
+        add_option( 'vi_seoDescription', $vi_seoDescription );
         add_option( 'vi_emailfriend', $vi_emailfriend );
         add_option( 'vi_availability', $vi_availability );
         add_option( 'vi_contact_dealer', $vi_contact_dealer );
         add_option( 'vi_address', $vi_address );
+        add_option( 'vi_city', $vi_city );
+        add_option( 'vi_state', $vi_state );
+        add_option( 'vi_zip', $vi_zip );
+        add_option( 'vi_areas', $vi_areas );
         add_option( 'vi_phone', $vi_phone );
         add_option( 'vi_weekday', $vi_weekday );
         add_option( 'vi_saturday', $vi_saturday );

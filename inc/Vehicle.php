@@ -20,13 +20,6 @@ class Vehicle
         $this->table = $this->db->prefix.'inventory';
     }
 
-    // public function viList(): string
-    // {
-    //     $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE %d", 1);
-    //     $vehicles = $this->db->get_results($query);
-    //     return json_encode($vehicles);
-    // }
-
     public function viUrl(string $viLink): string
     {
         return plugins_url($viLink, dirname(__FILE__));
@@ -35,11 +28,11 @@ class Vehicle
     public function viList(): string
     {
         $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
-        $rvcat = 1;
-        $where = "%s";
+        //$rvcat = 1;
+        $where = "1";
         if(!empty($_GET['rvcat'])){
             $rvcat = $_GET['rvcat'];
-            $where = "rvCategory ='%s'";
+            $where = "rvCategory ='".$rvcat."'";
         }
 
         $per_page = 10;
@@ -49,7 +42,7 @@ class Vehicle
             $offset = 0;
         }
         
-        $query = $this->db->prepare("SELECT * FROM {$table} WHERE $where ORDER BY year DESC LIMIT $offset,$per_page", $rvcat);
+        $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
         //echo $query;
         $vehicles = $this->db->get_results($query);
 
@@ -103,9 +96,9 @@ class Vehicle
                     <div class="col-sm-6">
                     <ul>
                         <li class="phone"><i class="fa fa-phone"></i> <a href="tel:'.$phone.'">'.$phone.'</a></li>
-                        <li data-id="'.$vehicle->id.'" class="print"> <i class="fa fa-print"></i> </li>
+                        <li data-id="'.$vehicle->slug.'" class="print"> <i class="fa fa-print"></i> </li>
                     </ul>
-                    </div>
+                    </div> 
                 </div>'; //vehicle title ends
 
             $output .= '<div class="row vehicle-content">'; // vehicle content
@@ -366,9 +359,9 @@ class Vehicle
        return json_encode($data);
     }
 
-    public function viDetails($id)
+    public function viDetails($slug)
     {
-        $result = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE id = %d", $id));
+        $result = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE slug = %s", $slug));
         return $result;
     }
 
@@ -383,6 +376,35 @@ class Vehicle
             $data['message']['inventory'] = 'Vehicle Deleted!!!';
         }
         echo json_encode($data);
+    }
+
+    public function viSitemap(): string
+    {
+        $home = get_option('home');
+        $rvslug = get_option('vi_slug');
+        $invlink = $home.'/'.$rvslug.'/';
+        $query = "SELECT slug FROM ".$this->table." WHERE 1";
+        $slugs = $this->db->get_results($query);
+        $xsl = $this->viUrl('assets').'/default.xsl';
+        $output = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$xsl.'"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+        
+        //$links = [];
+        foreach($slugs as $slug){
+           // $links[] = $invlink.$slug->slug;
+           $output .= '<url>
+            <loc><![CDATA['.$invlink.$slug->slug.']]</loc>
+            <changefreq><![CDATA[daily]]></changefreq>
+		    <priority><![CDATA[0.2]]></priority>
+            <lastmod><![CDATA['.date("Y-m-d").']]</lastmod>
+          </url>';
+        }
+
+        $output .= '</urlset>';
+
+        return $output;
+
+        //return json_encode($links);
     }
 
 }

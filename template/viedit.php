@@ -375,6 +375,12 @@ function checkslug(){
           //$('#drop_area').hide();
           $('#gallery').text(data.gallery);
           $('#galleryfiles').val(data.galleryfiles);
+
+          if(data.message){
+            var message = '<div class="alert success">'+data.message+'</div>';
+            $('#message').html(message);
+          }
+          
         }
       });
     });
@@ -399,6 +405,10 @@ function checkslug(){
                 var html = '';
                 thumb.html(html);
                 thumb.hide();
+                if(data.message){
+                    var message = '<div class="alert success">'+data.message+'</div>';
+                    $('#message').html(message);
+                }
             }
         });
     });
@@ -427,6 +437,10 @@ function checkslug(){
                 $('#featuredImage').val('');
                 $('#featuredid').val('');
                 $('.drop_area').removeClass('d-none');
+                if(data.message.update){
+                    var message = '<div class="alert success">'+data.message.update+'</div>';
+                    $('#message').html(message);
+                }
             }
         });
     });
@@ -454,9 +468,10 @@ function checkslug(){
                 thumb.hide();
                 $('#gallery').text(data.gallery);
                 $('#galleryfiles').val(data.galleryfiles);
-                // if(data.remains.length==0){
-                //   $('#drop_area').removeClass('d-none');
-                // }
+                if(data.message.update){
+                    var message = '<div class="alert success">'+data.message.update+'</div>';
+                    $('#message').html(message);
+                }
             }
         });
     });

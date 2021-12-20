@@ -2,6 +2,7 @@
 /**
  * Template Name: Inventory Details
  */
+
 get_header(); 
 
 $slug = get_option('vi_slug');
@@ -11,20 +12,21 @@ $emailfriend = get_option('vi_emailfriend');
 $availability = get_option('vi_availability');
 $contact_dealer = get_option('vi_contact_dealer');
 $address = get_option('vi_address');
+$city = get_option('vi_city');
+$state = get_option('vi_state');
+$zip = get_option('vi_zip');
 $phone = get_option('vi_phone');
 $weekday = get_option('vi_weekday');
 $saturday = get_option('vi_saturday');
 $weekend = get_option('vi_weekend');
-//echo $inventory;
+
 global $wpdb;
 $table = $wpdb->prefix.'inventory';
 $query = $wpdb->prepare("SELECT * FROM {$table} WHERE slug='%s'", $vslug);
 $vehicle = $wpdb->get_row($query);
 $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
-// print_r($vehicle);
-//echo "Best Built Inventory Details Page";
 ?>
-<script>document.title = "<?php echo $vehicleTitle; ?>";</script>
+
 <div class="bead">
 	<div class="container">
 	      <div class="text-center">
@@ -119,7 +121,7 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 		
 			<div class="contact p-3 bg-white rounded">
 			<h3 class="contact-title text-danger border-bottom-1">Contact Details</h3>
-			<p><?php echo $address; ?><br>
+			<p><?php echo $address.' | '.$city.', '.$state.', '.$zip; ?><br>
 			<b>Phone:</b> <a href="tel:<?php echo $phone;?>"><?php echo $phone;?></a><br>
 			<b>Monday – Friday:</b> <?php echo $weekday;?><br> <b>Saturday:</b> <?php echo $saturday;?><br> <b>Sunday:</b> <?php echo $weekend;?></p>
 			</div>

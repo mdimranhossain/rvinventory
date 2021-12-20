@@ -2,6 +2,13 @@
 /**
  * Template Name: Inventory List
  */
+add_filter( 'aioseo_disable_title_rewrites', 'change_wordpress_seo_title' );
+function change_wordpress_seo_title(){
+    // if ( is_singular() ) {
+    //     return true;
+    // }
+    return true;
+}
 get_header();
 $viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 if(file_exists($viAutoload)){
@@ -23,7 +30,7 @@ $phone = get_option('vi_phone');
 $contact_dealer = get_option('vi_contact_dealer');
 $pageTitle = get_option('vi_pageTitle');
 ?>
-<script>document.title = "<?php echo $pageTitle;?>";</script>
+<!-- <script>document.title = "<?php //echo $pageTitle;?>";</script> -->
 <div class="bead">
 	<div class="container">
 	      <div class="text-center">
@@ -78,7 +85,7 @@ $pageTitle = get_option('vi_pageTitle');
 				<div class="col-sm-6">
 					<ul>
 						<li class="phone"><i class="fa fa-phone"></i> <a href="tel:<?php echo $phone;?>"><?php echo $phone;?></a></li>
-						<li data-id="<?php echo $vehicle->id;?>" class="print"> <i class="fa fa-print"></i> </li>
+						<li data-id="<?php echo $vehicle->slug;?>" class="print"> <i class="fa fa-print"></i> </li>
 					</ul>
 				</div>
 			</div>

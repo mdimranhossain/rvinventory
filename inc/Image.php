@@ -129,6 +129,7 @@ class Image
     {   
         $data['target'] = $this->target;
         $data['id'] = $_REQUEST['id'];
+        $data['insert'] = [];
         if(isset($_FILES['file']['name'][0]))
         {
             $data['thumbs']='';
@@ -183,6 +184,11 @@ class Image
             $data['update_gallery'] = $this->db->update($this->table,['gallery'=>$data['gallery'],'galleryfiles'=>$data['galleryfiles']],['id'=>$data['id']]);
             if(!empty($data['update_gallery'])){
                 $data['message'] = "Gallery Updated";
+            }
+            if(!empty($data['insert'])){
+                $data['message'] = "Upload Succeed.";
+            }else{
+                $data['message'] = "Something wrong with file(s).";
             }
         }
         return json_encode($data);

@@ -16,7 +16,7 @@ require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-includes/post.php' );
 
 use Inc\Vehicle;
 
-$vehicle = new Vehicle($wpdb); 
+$vehicle = new Vehicle($wpdb);
 
 $id = 1;
 if(!empty($_REQUEST['vehicle'])){

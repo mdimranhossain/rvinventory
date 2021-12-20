@@ -23,6 +23,8 @@ function viurl(string $viLink){
 
 if(!empty($_REQUEST['vi_slug'])){
   $data['slug'] = trim($_REQUEST['vi_slug']);
+  $data['seoTitle'] = trim($_REQUEST['vi_seoTitle']);
+  $data['seoDescription'] = trim($_REQUEST['vi_seoDescription']);
   $data['pageTitle'] = trim($_REQUEST['vi_pageTitle']);
   $data['emailfriend'] = trim($_REQUEST['vi_emailfriend']);
   $data['availability'] = trim($_REQUEST['vi_availability']);
@@ -43,7 +45,7 @@ if(!empty($_REQUEST['vi_slug'])){
 flush_rewrite_rules();
 ?>
 <div id="settings">
-	<h2>Vehicle Inventory Settings</h2>
+	<h2>Inventory Settings</h2>
 	<div class="container">
     <div class="row">
       <div class="col-sm-12">
@@ -57,6 +59,14 @@ flush_rewrite_rules();
             <div class="row">
             <label class="control-label" for="vi_pageTitle">List Page Title: </label>
             <input type="text" class="form-control col-sm-6" id="vi_pageTitle" name="vi_pageTitle" value="<?php echo !empty($data['pageTitle'])?$data['pageTitle']:'';?>" />
+            </div>
+            <div class="row">
+            <label class="control-label" for="vi_seoTitle">SEO Title: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_seoTitle" name="vi_seoTitle" value="<?php echo !empty($data['seoTitle'])?stripslashes($data['seoTitle']):'';?>" />
+            </div>
+            <div class="row">
+            <label class="control-label" for="vi_seoDescription">SEO Description: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_seoDescription" name="vi_seoDescription" value="<?php echo !empty($data['seoDescription'])?stripslashes($data['seoDescription']):'';?>" />
             </div>
             <div class="row">
             <label class="control-label" for="vi_emailfriend">Email A Friend: </label>
@@ -74,6 +84,24 @@ flush_rewrite_rules();
             <label class="control-label" for="vi_address">Address: </label>
             <input type="text" class="form-control col-sm-6" id="vi_address" name="vi_address" value="<?php echo $data['address'];?>" />
             </div>
+            <div class="row">
+            <label class="control-label" for="vi_city">City: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_city" name="vi_city" value="<?php echo $data['city'];?>" />
+            </div>
+            <div class="row">
+            <label class="control-label" for="vi_state">State: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_state" name="vi_state" value="<?php echo $data['state'];?>" />
+            </div>
+            <div class="row">
+            <label class="control-label" for="vi_zip">ZIP: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_zip" name="vi_zip" value="<?php echo $data['zip'];?>" />
+            </div>
+
+            <div class="row">
+            <label class="control-label" for="vi_areas">Areas Served: </label>
+            <input type="text" class="form-control col-sm-6" id="vi_areas" name="vi_areas" value="<?php echo $data['areas'];?>" />
+            </div>
+
             <div class="row">
             <label class="control-label" for="vi_phone">Phone: </label>
             <input type="text" class="form-control col-sm-6" id="vi_phone" name="vi_phone" value="<?php echo $data['phone'];?>" />

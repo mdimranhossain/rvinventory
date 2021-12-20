@@ -1,6 +1,7 @@
 
 jQuery(document).ready(function ($) {
-    var slider = $('.slider').bxSlider({
+  var slider = $('.slider').bxSlider({
+        mode: 'fade',
         controls: true,
         pager: false,
         auto: false,

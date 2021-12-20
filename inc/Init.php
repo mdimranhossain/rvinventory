@@ -137,7 +137,7 @@ class Init
     // seo data
     public function viPageTitle(){
         $inventory = get_query_var( $this->vi_slug );
-        $seoTitle = stripslashes(get_option('vi_seoTitle'));
+        $seoTitle = !empty(get_option('vi_seoTitle'))?stripslashes(get_option('vi_seoTitle')):'';
         if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug) !== false && empty($inventory)){
             return $seoTitle;
         }elseif($inventory){

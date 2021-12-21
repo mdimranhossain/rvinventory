@@ -54,7 +54,7 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 						if($vehicle->gallery){ 
 							$images = explode(',',$vehicle->gallery)
 							?>
-							<ul class="slider">
+							<ul id="detialslider" class="slider">
 								<?php 
 									foreach( $images as $image ): 
 									
@@ -102,7 +102,6 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 		<div class="col-sm-4 sidebar dealer">
 			<h4>
 				<?php
-
 				if(!empty($vehicle->salePrice) && $vehicle->salePrice>0){
 					echo "Price: $".number_format($vehicle->salePrice,2);
 				}else{
@@ -121,7 +120,7 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 		
 			<div class="contact p-3 bg-white rounded">
 			<h3 class="contact-title text-danger border-bottom-1">Contact Details</h3>
-			<p><?php echo $address.' | '.$city.', '.$state.', '.$zip; ?><br>
+			<p><?php echo $address.' '.$city.', '.$state.', '.$zip; ?><br>
 			<b>Phone:</b> <a href="tel:<?php echo $phone;?>"><?php echo $phone;?></a><br>
 			<b>Monday – Friday:</b> <?php echo $weekday;?><br> <b>Saturday:</b> <?php echo $saturday;?><br> <b>Sunday:</b> <?php echo $weekend;?></p>
 			</div>

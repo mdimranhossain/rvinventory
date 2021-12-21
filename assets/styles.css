@@ -140,6 +140,10 @@
   height:80px;
 }
 
+#detialslider{
+  min-height: 450px;
+}
+
 .moreinfo{
   font-size:28px;
 }
@@ -202,7 +206,9 @@
         width:50px;
         height:40px;
     }
-
+    #detialslider{
+      min-height:205px;
+    }
     .sub_header_menu .menu ul li a {
       background: #ed2025!important;
       padding: 5px 5px;

@@ -89,12 +89,13 @@ class Init
         add_action( 'init',  function() {
             add_rewrite_rule('^'.$this->vi_slug.'/?([^/]*)/?', 'index.php?'.$this->vi_slug.'=$matches[1]', 'top');
         } );
-
-
-        //add_filter( 'aioseo_disable_title_rewrites', [$this,'viChangeSeoTitle'] );
+        // add inventory links to aioseo xml sitemap
+        add_filter( 'aioseo_sitemap_additional_pages', [$this,'viLinks'] );
+        // disable aioseo
         add_filter( 'aioseo_disable', [$this,'viDisableMeta'] );
-
+        // add seo title
         add_filter('pre_get_document_title',  [$this,'viPageTitle'], 9999);
+
 
         add_action('template_redirect', function(){
             $inventory = get_query_var( $this->vi_slug );
@@ -116,17 +117,14 @@ class Init
         
     }
 
-    // change seo title
+    // sitemap links
+    public function viLinks($sitemap) {
+        $vehicles = new Vehicle();
+        $sitemap = $vehicles->viSitemap();
+        return $sitemap;
+    }
 
-    // public function viChangeSeoTitle(){
-    //     $inventory = get_query_var( $this->vi_slug );
-    //     if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-        // disable aioseo
+    // disable aioseo
     public function viDisableMeta($disabled) {
         $inventory = get_query_var( $this->vi_slug );
         if (strpos($_SERVER['REQUEST_URI'], $this->vi_slug)) {
@@ -134,6 +132,7 @@ class Init
         }
         return false;
     }
+
     // seo data
     public function viPageTitle(){
         $inventory = get_query_var( $this->vi_slug );
@@ -189,7 +188,7 @@ class Init
     }
 
     public function viShortcode( $cat = 'rvs-for-sale-everett') {
-        $catpages = ['class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','class-a-rvs'=>'Class A RVs','travel-trailers'=>'Travel Trailers'];
+        $catpages = ['class-a-b-c-rvs'=>'Class A, B & C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','toy-hauler-rvs-for-sale'=>'Toy Hauler','travel-trailers'=>'Travel Trailers'];
         $atts = shortcode_atts( array(
             'rvcat' => $cat
         ), $cat, 'inventory' );

@@ -2,21 +2,21 @@
 /**
  * Template Name: Inventory List
  */
-add_filter( 'aioseo_disable_title_rewrites', 'change_wordpress_seo_title' );
-function change_wordpress_seo_title(){
-    // if ( is_singular() ) {
-    //     return true;
-    // }
-    return true;
-}
+// add_filter( 'aioseo_disable_title_rewrites', 'change_wordpress_seo_title' );
+// function change_wordpress_seo_title(){
+//     // if ( is_singular() ) {
+//     //     return true;
+//     // }
+//     return true;
+// }
 get_header();
 $viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 if(file_exists($viAutoload)){
   require_once $viAutoload;
 }
 $slug = get_option('vi_slug');
-// $catpages = ['rvs-for-sale-everett'=>'rvs-for-sale-everett','class-c-rvs'=>'Class C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','motorhomes'=>'Motorhomes','travel-trailers'=>'Travel Trailers'];
-$cats = ['rvs-for-sale-everett','class-a-rvs','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
+// $catpages = ['rvs-for-sale-everett'=>'rvs-for-sale-everett','class-a-b-c-rvs'=>'Class A, B & C RVs','campers'=>'Campers','fifth-wheels'=>'Fifth Wheels','toy-hauler-rvs-for-sale'=>'Toy Hauler','travel-trailers'=>'Travel Trailers'];
+$cats = ['rvs-for-sale-everett','class-a-b-c-rvs','class-c-rvs','campers','fifth-wheels','toy-hauler-rvs-for-sale','travel-trailers'];
 // foreach($catpages as $key=>$val){
 // 	$inventory = get_query_var($key);
 //     if(strpos($_SERVER['REQUEST_URI'], $key) == true && !empty($inventory)){

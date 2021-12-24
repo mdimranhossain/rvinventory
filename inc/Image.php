@@ -315,6 +315,13 @@ class Image
         $fileids = rtrim($data['inventory']->galleryfiles,',');
         $fileids = ltrim($fileids,',');
         $data['fileids'] = explode(',',$fileids);
+        $data['exists'] = [];
+            foreach($data['fileids'] as $field){
+                if(file_exists($field)){
+                    $data['exists'][] = $field;
+                }
+            }
+        // $data['exists'] = array_diff( $data['fileids'], [$image_id] );
         $data['remains'] = array_diff( $data['fileids'], [$image_id] );
         $data['galleryfiles'] = implode(',',$data['remains']);
 

@@ -378,33 +378,19 @@ class Vehicle
         echo json_encode($data);
     }
 
-    public function viSitemap(): string
+    public function viSitemap(): array
     {
         $home = get_option('home');
         $rvslug = get_option('vi_slug');
         $invlink = $home.'/'.$rvslug.'/';
         $query = "SELECT slug FROM ".$this->table." WHERE 1";
         $slugs = $this->db->get_results($query);
-        $xsl = $this->viUrl('assets').'/default.xsl';
-        $output = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$xsl.'"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-        
-        //$links = [];
+           
+        $links = [];
         foreach($slugs as $slug){
-           // $links[] = $invlink.$slug->slug;
-           $output .= '<url>
-            <loc><![CDATA['.$invlink.$slug->slug.']]</loc>
-            <changefreq><![CDATA[daily]]></changefreq>
-		    <priority><![CDATA[0.2]]></priority>
-            <lastmod><![CDATA['.date("Y-m-d").']]</lastmod>
-          </url>';
+           $links[] = ['loc'=>$invlink.$slug->slug, 'priority' => '0.5', 'changefreq' => 'daily', 'lastmod' => date('Y-m-d')];
         }
-
-        $output .= '</urlset>';
-
-        return $output;
-
-        //return json_encode($links);
+        return $links;
     }
 
 }

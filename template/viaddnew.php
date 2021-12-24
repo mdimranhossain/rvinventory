@@ -80,10 +80,10 @@ function viurl(string $viLink){
                                 <label for="rvCategory" class="control-label">RV Category</label>
                                 <select name="rvCategory" id="rvCategory" class="form-control">
                                     <option value="">Select</option>
-                                    <option value="Class C RVs">Class C RVs</option>
+                                    <option value="Class A, B & C RVs">Class A, B & C RV's</option>
                                     <option value="Campers">Campers</option>
                                     <option value="Fifth Wheels">Fifth Wheels</option>
-                                    <option value="Class A RVs">Class A RVs</option>
+                                    <option value="Toy Hauler">Toy Hauler</option>
                                     <option value="Travel Trailers">Travel Trailers</option>
                                     <option value="Miscellaneous">Miscellaneous</option>
                                 </select>

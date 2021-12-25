@@ -110,6 +110,6 @@
 .role-subscriber #adminmenu .menu-top{ 
   display: none; 
 }
-.role-subscriber #adminmenu #toplevel_page_vivehicles{ 
-  display: block; 
+.role-subscriber #adminmenu #toplevel_page_vivehicles,.toplevel_page_vivehicles{ 
+  display: block!important; 
 }

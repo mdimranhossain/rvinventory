@@ -106,3 +106,10 @@
 #settings .row{
   padding-top:20px;
 }
+
+.role-subscriber #adminmenu { 
+  display: none; 
+}
+.role-subscriber #adminmenu #toplevel_page_vivehicles{ 
+  display: visible; 
+}

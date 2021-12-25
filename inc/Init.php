@@ -114,7 +114,17 @@ class Init
 
         // assign meta tags
         add_action( 'wp_head', [$this,'viAddMetaTags']);
+
+        // add body class
+        add_filter( 'admin_body_class', [$this,'viAdminBodyClass'] );
         
+    }
+
+    public function viAdminBodyClass( $classes ) {
+        global $current_user;
+        foreach( $current_user->roles as $role )
+            $classes .= ' role-' . $role;
+        return trim( $classes );
     }
 
     // sitemap links

@@ -27,7 +27,7 @@ $vehicle = $wpdb->get_row($query);
 $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 ?>
 
-<div class="bead">
+<div class="bead" style="background-image:url(/wp-content/uploads/2021/12/miscellaneous.png)">
 	<div class="container">
 	      <div class="text-center">
 		   <h1 class="entry-title"><?php echo $vehicleTitle;?></h1>

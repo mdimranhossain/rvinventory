@@ -107,9 +107,9 @@
   padding-top:20px;
 }
 
-.role-subscriber #adminmenu { 
+.role-subscriber #adminmenu .menu-top{ 
   display: none; 
 }
 .role-subscriber #adminmenu #toplevel_page_vivehicles{ 
-  display: visible; 
+  display: block; 
 }

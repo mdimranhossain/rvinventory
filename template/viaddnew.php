@@ -268,29 +268,30 @@ jQuery(document).ready(function($) {
             }
         });
     });
-    // $('.gallery').on('click', function(e){
-    //   e.preventDefault();
-    //   var endpoint = "<?php echo viurl('/vehicle.php');?>";
-    //   var url = 'admin.php?page=viedit&id=';
-    //   $.ajax({
-    //         url:endpoint,
-    //         method: "POST",
-    //         data: new FormData(document.getElementById('vehicleform')),
-    //         contentType: false,
-    //         cache: false,
-    //         processData: false,
-    //         dataType: "json",
-    //         success: function(data) {
-    //             console.log(data);
-    //             if(data.insertid){
-    //               url += data.insertid;
-    //               location.href = url+'#gallerycontent';
-    //               // history.pushState({}, null, url);
-    //               // $('#vehicle').val('update');
-    //             }
-    //         }
-    //     });
-    // });
+    $('.gallery').on('click', function(e){
+      e.preventDefault();
+      var endpoint = "<?php echo viurl('/vehicle.php');?>";
+      var url = 'admin.php?page=viedit&id=';
+      $.ajax({
+            url:endpoint,
+            method: "POST",
+            data: new FormData(document.getElementById('vehicleform')),
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if(data.insertid){
+                  url += data.insertid;
+                  location.href = url;
+                //   location.href = url+'#gallerycontent';
+                  // history.pushState({}, null, url);
+                  // $('#vehicle').val('update');
+                }
+            }
+        });
+    });
     // image upload
     $('#featured').on('change', function(e) {
         e.preventDefault();
@@ -373,7 +374,8 @@ jQuery(document).ready(function($) {
     $('#ddgallery').on('change', function(e) {
         e.preventDefault();
         var formData = new FormData(document.getElementById('vehicleform'));
-        var endpoint = "<?php echo viurl("/dragdrop.php");?>";
+        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
             method: "POST",
@@ -400,7 +402,8 @@ jQuery(document).ready(function($) {
         for (var i = 0; i < files.length; i++) {
             formData.append('file[]', files[i]);
         }
-        var endpoint = "<?php echo viurl("/dragdrop.php");?>";
+        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
             method: "POST",

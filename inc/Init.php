@@ -79,7 +79,12 @@ class Init
         
         add_action( 'wp_ajax_viUpload', [$this, 'viUpload']);
         add_action( 'wp_ajax_viSlug',[$this,'viSlug']);
+        add_action( 'wp_ajax_viVehicle',[$this,'viVehicle']);
         add_action( 'wp_ajax_viDragDrop',[$this,'viDragDrop']);
+        add_action( 'wp_ajax_viUpdateImage',[$this,'viUpdateImage']);
+        add_action( 'wp_ajax_viUpdateGallery',[$this,'viUpdateGallery']);
+        add_action( 'wp_ajax_viSingleDragDrop',[$this,'viSingleDragDrop']);
+        add_action( 'wp_ajax_viDeleteImage',[$this,'viDeleteImage']);
 
         add_filter( 'query_vars', function( $query_vars ){
             $query_vars[] = $this->vi_slug;
@@ -326,77 +331,143 @@ class Init
         die();
     }
 
-    public function viUpload()
-    {
-        ini_set('post_max_size', '5M'); //or bigger by multiple files
-        ini_set('upload_max_filesize', '5M');
-        ini_set('max_file_uploads', 1);
+    // public function viUpload()
+    // {
+    //     ini_set('post_max_size', '5M'); //or bigger by multiple files
+    //     ini_set('upload_max_filesize', '5M');
+    //     ini_set('max_file_uploads', 1);
 
-        $target_dir = wp_upload_dir();
-        $target_file = $target_dir . basename($_FILES["file"]["name"]);
-        $chars = [' ',',','(',')'];
-        $target_file = str_replace($chars, '', $target_file);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $data=[];
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["file"]["tmp_name"]);
-            if($check !== false) {
-                $data['mime'] = "File is - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                $data['not_allowed'] = "File is not allowed.";
-                $uploadOk = 0;
-            }
-        }
+    //     $target_dir = wp_upload_dir();
+    //     $target_file = $target_dir . basename($_FILES["file"]["name"]);
+    //     $chars = [' ',',','(',')'];
+    //     $target_file = str_replace($chars, '', $target_file);
+    //     $uploadOk = 1;
+    //     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    //     $data=[];
+    //     // Check if image file is a actual image or fake image
+    //     if(isset($_POST["submit"])) {
+    //         $check = getimagesize($_FILES["file"]["tmp_name"]);
+    //         if($check !== false) {
+    //             $data['mime'] = "File is - " . $check["mime"] . ".";
+    //             $uploadOk = 1;
+    //         } else {
+    //             $data['not_allowed'] = "File is not allowed.";
+    //             $uploadOk = 0;
+    //         }
+    //     }
 
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            $data['duplicate'] = "Sorry, file already exists. Please rename your file.";
-            //$data['filename'] = $target_file.'-1';
-            $uploadOk = 0;
-        }
+    //     // Check if file already exists
+    //     if (file_exists($target_file)) {
+    //         $data['duplicate'] = "Sorry, file already exists. Please rename your file.";
+    //         //$data['filename'] = $target_file.'-1';
+    //         $uploadOk = 0;
+    //     }
 
-        // Check file size
-        if ($_FILES["file"]["size"] > 500000) {
-            $data['size_error'] = "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-        $data['filetype'] = $imageFileType;
-        // Allow certain file formats
-        $allowed =['pdf','doc','docx','odt'];
-        if(!in_array($imageFileType,$allowed)) {
-            $data['type_error'] = "Sorry, only PDF and or Word files are allowed.";
-            $uploadOk = 0;
-        }
+    //     // Check file size
+    //     if ($_FILES["file"]["size"] > 500000) {
+    //         $data['size_error'] = "Sorry, your file is too large.";
+    //         $uploadOk = 0;
+    //     }
+    //     $data['filetype'] = $imageFileType;
+    //     // Allow certain file formats
+    //     $allowed =['pdf','doc','docx','odt'];
+    //     if(!in_array($imageFileType,$allowed)) {
+    //         $data['type_error'] = "Sorry, only PDF and or Word files are allowed.";
+    //         $uploadOk = 0;
+    //     }
 
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            $data['upload_error'] = "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                $data['success'] = "The file ". htmlspecialchars( basename($_FILES["file"]["name"])). " has been uploaded.";
-                $data['dir'] = $target_dir;
-                $data['file'] = wp_upload_dir().'/'.$target_file;
-            } else {
-                $data['file_error'] = "Sorry, there was an error uploading your file.";
-            }
-        }
-        echo json_encode($data);
-        die();
-    }
+    //     // Check if $uploadOk is set to 0 by an error
+    //     if ($uploadOk == 0) {
+    //         $data['upload_error'] = "Sorry, your file was not uploaded.";
+    //     // if everything is ok, try to upload file
+    //     } else {
+    //         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+    //             $data['success'] = "The file ". htmlspecialchars( basename($_FILES["file"]["name"])). " has been uploaded.";
+    //             $data['dir'] = $target_dir;
+    //             $data['file'] = wp_upload_dir().'/'.$target_file;
+    //         } else {
+    //             $data['file_error'] = "Sorry, there was an error uploading your file.";
+    //         }
+    //     }
+    //     echo json_encode($data);
+    //     die();
+    // }
 
     public function viSlug(){
         $vehicle = new Vehicle();
         echo $vehicle->viSlug();
         wp_die();
     }
+    public function viVehicle(){
+        $vehicle = new Vehicle();
+        $handle = '';
+        if(!empty($_REQUEST['vehicle'])){
+            $handle = $_REQUEST['vehicle'];
+        }
+
+        switch($handle){
+            case 'create':
+                echo $vehicle->viCreate();
+                break;
+            case 'update':
+            echo $vehicle->viUpdate();
+                break;
+            case 'delete':
+                $vehicle->viDelete();
+                break;
+            default:
+                echo $vehicle->viList();
+        }
+        wp_die();
+    }
+
+    public function viUpload(){
+        $image = new Image(); 
+        if(!empty($_POST)){
+            echo $image->upload();
+        }else{
+            echo "No file found!";
+        }
+        wp_die();
+    }
 
     public function viDragDrop(){
         $image = new Image(); 
         echo !empty($_FILES['file'])?$image->multiupload():"No file found!";
+        wp_die();
+    }
+
+    public function viUpdateImage(){
+        $image = new Image(); 
+        if(!empty($_REQUEST['image_id']) && !empty($_REQUEST['id'])){
+            echo $image->update($_REQUEST['image_id'],$_REQUEST['id']);
+         }
+         wp_die();
+    }
+
+    public function viSingleDragDrop(){
+        $image = new Image(); 
+        if(!empty($_FILES['file'])){
+            echo $image->singleDragdrop();
+        }else{
+            echo "No file found!";
+        }
+        wp_die();
+    }
+
+    public function viUpdateGallery(){
+        $image = new Image(); 
+        if(!empty($_REQUEST['image_id']) && !empty($_REQUEST['id'])){
+            echo $image->updateGallery($_REQUEST['image_id'],$_REQUEST['id']);
+        }
+        wp_die();
+    }
+
+    public function viDeleteImage(){
+        $image = new Image(); 
+        if(!empty($_REQUEST['image_id'])){
+            echo $image->delete($_REQUEST['image_id']);
+        }
         wp_die();
     }
 

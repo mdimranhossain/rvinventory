@@ -57,7 +57,6 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 							<ul id="detialslider" class="slider">
 								<?php 
 									foreach( $images as $image ): 
-									
 									?>
 									<li>
 										<a data-fancybox="gallery" data-caption="<?php echo $vehicle->year.' '.$vehicle->make.' '.$vehicle->model; ?>" href="<?php echo esc_url($image); ?>">
@@ -114,8 +113,8 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 			<div class="buttons">
 				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $availability.'?vehicle='.$vfrom.'&vehicleurl='.$vdetail;?>" href="javascript:;" id="" role="button">
 				<i class="fa fa-check-square-o"></i><span> Check Availability</span></a>
-				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $emailfriend; ?>" href="javascript:;" id="" role="button">
-				<i class="fa fa-envelope-o"></i><span> Email a Friend</span></a>
+				<!-- <a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $emailfriend; ?>" href="javascript:;" id="" role="button">
+				<i class="fa fa-envelope-o"></i><span> Email a Friend</span></a> -->
 			</div>
 		
 			<div class="contact p-3 bg-white rounded">

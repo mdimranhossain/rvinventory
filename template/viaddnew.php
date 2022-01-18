@@ -90,8 +90,7 @@ function viurl(string $viLink){
                             </div>
                             <div class="form-group">
                                 <label for="mileage" class="control-label">Mileage</label>
-                                <input type="text" name="mileage" id="mileage" class="form-control"
-                                    value=""
+                                <input type="text" name="mileage" id="mileage" class="form-control" value=""
                                     placeholder="1000" />
                             </div>
                             <div class="form-group">
@@ -107,8 +106,8 @@ function viurl(string $viLink){
                             </div>
 
                         </div>
-              
-           
+
+
                         <div class="tabcontent gallerycontent">
                             <div class="form-group">
                                 <?php wp_enqueue_media(); ?>
@@ -131,7 +130,8 @@ function viurl(string $viLink){
                             <br />
                             <div class="form-group">
                                 <h4>Gallery</h4>
-                                <button id="gallery_button" class="btn btn-info btn-md d-none" type="button">Add Image</button>
+                                <button id="gallery_button" class="btn btn-info btn-md d-none" type="button">Add
+                                    Image</button>
                                 <textarea name="gallery" id="gallery"
                                     style="display:none;"><?php echo !empty($vehicle->gallery)?$vehicle->gallery:'';?></textarea>
                                 <input type="hidden" name="galleryfiles" id="galleryfiles"
@@ -189,21 +189,21 @@ function viurl(string $viLink){
 <script>
 function checkslug() {
     var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-      //var endpoint = "<?php //echo viurl("/checkslug.php");?>";
-      jQuery('#action').val('viSlug');
-      jQuery.ajax({
-            url:endpoint,
-            method: "POST",
-            data: new FormData(document.getElementById('vehicleform')),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(result) {
-                console.log(result);
-                jQuery('#slug').val(result.slug);
-            }
-        });
+    //var endpoint = "<?php //echo viurl("/checkslug.php");?>";
+    jQuery('#action').val('viSlug');
+    jQuery.ajax({
+        url: endpoint,
+        method: "POST",
+        data: new FormData(document.getElementById('vehicleform')),
+        contentType: false,
+        cache: false,
+        processData: false,
+        dataType: "json",
+        success: function(result) {
+            console.log(result);
+            jQuery('#slug').val(result.slug);
+        }
+    });
     // var endpoint = "<?php //echo viurl('/vehicle.php');?>";
     // var url = 'admin.php?page=viedit&id=';
     // //console.log(url);
@@ -224,8 +224,11 @@ function checkslug() {
     //     }
     // });
 }
+
 function save() {
-    var endpoint = "<?php echo viurl('/vehicle.php');?>";
+    var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+    //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
+    jQuery('#action').val('viVehicle');
     var url = 'admin.php?page=viedit&id=';
     jQuery.ajax({
         url: endpoint,
@@ -248,7 +251,9 @@ function save() {
 jQuery(document).ready(function($) {
     $('#visave').on('click', function(e) {
         e.preventDefault();
-        var endpoint = "<?php echo viurl('/vehicle.php');?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+        //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
+        jQuery('#action').val('viVehicle');
         var url = 'admin.php?page=viedit&id=';
         console.log(url);
         $.ajax({
@@ -268,12 +273,14 @@ jQuery(document).ready(function($) {
             }
         });
     });
-    $('.gallery').on('click', function(e){
-      e.preventDefault();
-      var endpoint = "<?php echo viurl('/vehicle.php');?>";
-      var url = 'admin.php?page=viedit&id=';
-      $.ajax({
-            url:endpoint,
+    $('.gallery').on('click', function(e) {
+        e.preventDefault();
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+        //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
+        jQuery('#action').val('viVehicle');
+        var url = 'admin.php?page=viedit&id=';
+        $.ajax({
+            url: endpoint,
             method: "POST",
             data: new FormData(document.getElementById('vehicleform')),
             contentType: false,
@@ -282,12 +289,12 @@ jQuery(document).ready(function($) {
             dataType: "json",
             success: function(data) {
                 console.log(data);
-                if(data.insertid){
-                  url += data.insertid;
-                  location.href = url;
-                //   location.href = url+'#gallerycontent';
-                  // history.pushState({}, null, url);
-                  // $('#vehicle').val('update');
+                if (data.insertid) {
+                    url += data.insertid;
+                    location.href = url;
+                    //   location.href = url+'#gallerycontent';
+                    // history.pushState({}, null, url);
+                    // $('#vehicle').val('update');
                 }
             }
         });
@@ -295,9 +302,10 @@ jQuery(document).ready(function($) {
     // image upload
     $('#featured').on('change', function(e) {
         e.preventDefault();
-        //var endpoint = "<?php //echo admin_url('admin-ajax.php');?>";
-        var endpoint = "<?php echo viurl("/image.php");?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+        //var endpoint = "<?php //echo viurl("/image.php");?>";
         var formData = new FormData(document.getElementById('vehicleform'));
+        formData.append('action', 'viUpload');
         $.ajax({
             url: endpoint,
             method: "POST",
@@ -351,6 +359,8 @@ jQuery(document).ready(function($) {
         var formData = new FormData();
         var files = e.originalEvent.dataTransfer.files;
         formData.append('file[0]', files[0]);
+        formdata.append('id', id);
+        formdata.append('action', 'viSingleDragDrop');
         // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
@@ -374,6 +384,9 @@ jQuery(document).ready(function($) {
     $('#ddgallery').on('change', function(e) {
         e.preventDefault();
         var formData = new FormData(document.getElementById('vehicleform'));
+        var id = $('#id').val();
+        formData.append('id', id);
+        formData.append('action', 'viDragDrop');
         // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
@@ -397,11 +410,14 @@ jQuery(document).ready(function($) {
     $('#drop_area').on('drop', function(e) {
         e.preventDefault();
         $(this).removeClass('drag_over');
-        var formData = new FormData();
+        var id = $('#id').val();
+        var formData = new FormData(document.getElementById('vehicleform'));
         var files = e.originalEvent.dataTransfer.files;
         for (var i = 0; i < files.length; i++) {
             formData.append('file[]', files[i]);
         }
+        formData.append('id', id);
+        formData.append('action', 'viDragDrop');
         // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
@@ -424,15 +440,18 @@ jQuery(document).ready(function($) {
     // delete image
     $(document).on('click', '.delete', function(e) {
         e.preventDefault();
-        //var endpoint = "<?php //echo admin_url('admin-ajax.php');?>";
-        var endpoint = "<?php echo viurl("/image_delete.php");?>";
+        var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
+        // var endpoint = "<?php //echo viurl("/image_delete.php");?>";
+        var formdata = new FormData(document.getElementById('vehicleform'));
         var image = $(this).data('image_id');
+        formdata.append('image_id', image);
         var thumb = $(this).parent();
+        formdata.append('action', 'viDeleteImage');
+
         $.ajax({
-            url: endpoint + '?image_id=' + image,
-            method: "GET",
-            //data: new FormData(document.getElementById('vehicleform')),
-            //data:'{"image_id":"'+image+'"}',
+            url: endpoint,
+            method: "POST",
+            data: formdata,
             contentType: false,
             cache: false,
             processData: false,

@@ -39,8 +39,8 @@ class Init
     {
         global $wpdb;
         $this->db = $wpdb;
-        $this->table = $this->db->prefix.'inventory';
-        $this->imageTable = $this->db->prefix.'inventory_images';
+        $this->table = $this->db->prefix.'rvinventory';
+        $this->imageTable = $this->db->prefix.'rvinventory_images';
         $this->plugin = plugin_basename(__FILE__);
         $this->viUrl = plugins_url("", dirname(__FILE__));
         $this->viPath = dirname(__FILE__, 2);
@@ -66,12 +66,7 @@ class Init
     public function start()
     {
         add_action('admin_enqueue_scripts', [$this, 'viAdminAssets']);
-        // $cats = ['rvs-for-sale-everett','class-c-rvs','campers','fifth-wheels','motorhomes','travel-trailers'];
-        // foreach($cats as $cat){
-        //     if (strpos($_SERVER['REQUEST_URI'], $cat) !== false){
-        //     add_action('wp_enqueue_scripts', [$this, 'viAssets']);
-        //     }
-        // }
+
         add_action('wp_enqueue_scripts', [$this, 'viAssets']);
         add_action('admin_menu', [$this, 'viAddPage']);
         add_action('vivehicles', [$this, 'viVehicles']);
@@ -94,10 +89,13 @@ class Init
         add_action( 'init',  function() {
             add_rewrite_rule('^'.$this->vi_slug.'/?([^/]*)/?', 'index.php?'.$this->vi_slug.'=$matches[1]', 'top');
         } );
+
         // add inventory links to aioseo xml sitemap
         add_filter( 'aioseo_sitemap_additional_pages', [$this,'viLinks'] );
+
         // disable aioseo
         add_filter( 'aioseo_disable', [$this,'viDisableMeta'] );
+        
         // add seo title
         add_filter('pre_get_document_title',  [$this,'viPageTitle'], 9999);
 
@@ -330,68 +328,6 @@ class Init
         echo json_encode($data);
         die();
     }
-
-    // public function viUpload()
-    // {
-    //     ini_set('post_max_size', '5M'); //or bigger by multiple files
-    //     ini_set('upload_max_filesize', '5M');
-    //     ini_set('max_file_uploads', 1);
-
-    //     $target_dir = wp_upload_dir();
-    //     $target_file = $target_dir . basename($_FILES["file"]["name"]);
-    //     $chars = [' ',',','(',')'];
-    //     $target_file = str_replace($chars, '', $target_file);
-    //     $uploadOk = 1;
-    //     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    //     $data=[];
-    //     // Check if image file is a actual image or fake image
-    //     if(isset($_POST["submit"])) {
-    //         $check = getimagesize($_FILES["file"]["tmp_name"]);
-    //         if($check !== false) {
-    //             $data['mime'] = "File is - " . $check["mime"] . ".";
-    //             $uploadOk = 1;
-    //         } else {
-    //             $data['not_allowed'] = "File is not allowed.";
-    //             $uploadOk = 0;
-    //         }
-    //     }
-
-    //     // Check if file already exists
-    //     if (file_exists($target_file)) {
-    //         $data['duplicate'] = "Sorry, file already exists. Please rename your file.";
-    //         //$data['filename'] = $target_file.'-1';
-    //         $uploadOk = 0;
-    //     }
-
-    //     // Check file size
-    //     if ($_FILES["file"]["size"] > 500000) {
-    //         $data['size_error'] = "Sorry, your file is too large.";
-    //         $uploadOk = 0;
-    //     }
-    //     $data['filetype'] = $imageFileType;
-    //     // Allow certain file formats
-    //     $allowed =['pdf','doc','docx','odt'];
-    //     if(!in_array($imageFileType,$allowed)) {
-    //         $data['type_error'] = "Sorry, only PDF and or Word files are allowed.";
-    //         $uploadOk = 0;
-    //     }
-
-    //     // Check if $uploadOk is set to 0 by an error
-    //     if ($uploadOk == 0) {
-    //         $data['upload_error'] = "Sorry, your file was not uploaded.";
-    //     // if everything is ok, try to upload file
-    //     } else {
-    //         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-    //             $data['success'] = "The file ". htmlspecialchars( basename($_FILES["file"]["name"])). " has been uploaded.";
-    //             $data['dir'] = $target_dir;
-    //             $data['file'] = wp_upload_dir().'/'.$target_file;
-    //         } else {
-    //             $data['file_error'] = "Sorry, there was an error uploading your file.";
-    //         }
-    //     }
-    //     echo json_encode($data);
-    //     die();
-    // }
 
     public function viSlug(){
         $vehicle = new Vehicle();

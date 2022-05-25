@@ -2,7 +2,7 @@
 
 /*
 
-* vivehicles
+* rvvehicles
 
 * @Package: rvinventory
 
@@ -16,11 +16,11 @@ require_once( ABSPATH . 'wp-admin/admin-header.php' );
 
 
 
-$viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 
-if (file_exists($viAutoload)) {
+if (file_exists($rvAutoload)) {
 
-    require_once $viAutoload;
+    require_once $rvAutoload;
 
 }
 
@@ -30,13 +30,13 @@ use Inc\Setting;
 
 $setting = new Setting();
 
-$options = $setting->viInventoryOptions();
+$options = $setting->rvInventoryOptions();
 
 $slug = $options['slug'];
 
-function viurl(string $viLink){
+function rvurl(string $rvLink){
 
-	return plugins_url($viLink, dirname(__FILE__));
+	return plugins_url($rvLink, dirname(__FILE__));
 
 }
 
@@ -155,7 +155,7 @@ $vehicles = $wpdb->get_results($query);
 
                     <input type="hidden" id="id" name="post_id" />
 
-                    <input type="hidden" id="action" name="action" value="viDeleteAttachment" />
+                    <input type="hidden" id="action" name="action" value="rvDeleteAttachment" />
 
                     <input type="hidden" id="vehicle" name="vehicle" value="delete" />
 
@@ -163,7 +163,7 @@ $vehicles = $wpdb->get_results($query);
 
 					<input type="hidden" id="galleryfiles" name="galleryfiles" />
 
-<input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce( 'viDeleteAttachment' ); ?>" />
+<input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce( 'rvDeleteAttachment' ); ?>" />
 
 
 
@@ -222,7 +222,7 @@ $vehicles = $wpdb->get_results($query);
 
         var deletemedia = "<?php echo admin_url('admin-ajax.php');?>";
 
-        var deleteinventory = "<?php echo viurl("/vehicle.php");?>";
+        var deleteinventory = "<?php echo rvurl("/vehicle.php");?>";
 
         var form = document.getElementById('deleteform');
 

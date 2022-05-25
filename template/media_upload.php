@@ -2,7 +2,7 @@
 
 /*
 
-* visettings
+* media_upload
 
 * @Package: rvinventory
 
@@ -16,27 +16,27 @@ require_once( ABSPATH . 'wp-admin/admin-header.php' );
 
 
 
- $viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 
-if (file_exists($viAutoload)) {
+if (file_exists($rvAutoload)) {
 
-    require_once $viAutoload;
+    require_once $rvAutoload;
 
 }
 
 use Inc\VehicleData;
 
-$viData=new VehicleData();
+$rvData=new Vehiclea();
 
-$viVehicles=$viData->viVehicleList();
+$rvVehicles=$rvData->rvVehicleList();
 
-$viVehicles=json_decode($viVehicles);
+$rvVehicles=json_decode($rvVehicles);
 
 
 
-function viurl(string $viLink){
+function rvurl(string $rvLink){
 
-	return plugins_url($viLink, dirname(__FILE__));
+	return plugins_url($rvLink, dirname(__FILE__));
 
 }
 
@@ -68,9 +68,9 @@ function viurl(string $viLink){
 
 <form method="post">
 
-  <input id="vi-media-url" type="text" name="media" />
+  <input id="rv-media-url" type="text" name="media" />
 
-  <input id="vi-button" type="button" class="button" value="Upload Image" />
+  <input id="rv-button" type="button" class="button" value="Upload Image" />
 
   <input type="submit" value="Submit" />
 
@@ -86,21 +86,21 @@ function viurl(string $viLink){
 
 jQuery(document).ready(function($){
 
-  // Define a variable viMedia
+  // Define a variable rvMedia
 
-  var viMedia;
+  var rvMedia;
 
 
 
-  $('#vi-button').click(function(e) {
+  $('#rv-button').click(function(e) {
 
     e.preventDefault();
 
     // If the upload object has already been created, reopen the dialog
 
-      if (viMedia) {
+      if (rvMedia) {
 
-      viMedia.open();
+      rvMedia.open();
 
       return;
 
@@ -108,7 +108,7 @@ jQuery(document).ready(function($){
 
     // Extend the wp.media object
 
-    viMedia = wp.media.frames.file_frame = wp.media({
+    rvMedia = wp.media.frames.file_frame = wp.media({
 
       title: 'Select media',
 
@@ -122,17 +122,17 @@ jQuery(document).ready(function($){
 
     // When a file is selected, grab the URL and set it as the text field's value
 
-    viMedia.on('select', function() {
+    rvMedia.on('select', function() {
 
-      var attachment = viMedia.state().get('selection').first().toJSON();
+      var attachment = rvMedia.state().get('selection').first().toJSON();
 
-      $('#vi-media-url').val(attachment.url);
+      $('#rv-media-url').val(attachment.url);
 
     });
 
     // Open the upload dialog
 
-    viMedia.open();
+    rvMedia.open();
 
   });
 

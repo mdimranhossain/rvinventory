@@ -6,13 +6,13 @@
 require_once( ABSPATH . 'wp-load.php' );
 require_once( ABSPATH . 'wp-admin/admin.php' );
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
-$viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
-if(file_exists($viAutoload)){
-  require_once $viAutoload;
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+if(file_exists($rvAutoload)){
+  require_once $rvAutoload;
 }
 // use Inc\Vehicle;
-function viurl(string $viLink){
-	return plugins_url($viLink, dirname(__FILE__));
+function rvurl(string $rvLink){
+	return plugins_url($rvLink, dirname(__FILE__));
 }
 ?>
 <div id="vehicle">
@@ -159,9 +159,6 @@ function viurl(string $viLink){
                             <div class="form-group">
                                 <label for="status" class="control-label">Status</label>
                                 <select name="status" id="status" class="form-control">
-                                    <!-- <option value="0"
-                                        <?php //echo (!empty($vehicle->status) && $vehicle->status==0)?'selected':'';?>>
-                                        Draft</option> -->
                                     <option value="1">Publish</option>
                                 </select>
                             </div>
@@ -173,12 +170,12 @@ function viurl(string $viLink){
                                 <input type="hidden" name="vehicle" id="vehicle" value="create" />
                                 <input type="hidden" name="action" id="action" value="" />
                                 <?php wp_nonce_field( 'create-vehicle_'.time());?>
-                                <button type="submit" id="vipublish" class="btn btn-primary btn-sm">Publish</button>
+                                <button type="submit" id="rvpublish" class="btn btn-primary btn-sm">Publish</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 addnewbottom">
-                        <h2><button type="button" id="visave"
+                        <h2><button type="button" id="rvsave"
                                 class="btn btn-primary btn-sm pull-right">Save</button><br /><br /></h2>
                     </div>
                 </div>
@@ -189,8 +186,7 @@ function viurl(string $viLink){
 <script>
 function checkslug() {
     var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-    //var endpoint = "<?php //echo viurl("/checkslug.php");?>";
-    jQuery('#action').val('viSlug');
+    jQuery('#action').val('rvSlug');
     jQuery.ajax({
         url: endpoint,
         method: "POST",
@@ -204,32 +200,12 @@ function checkslug() {
             jQuery('#slug').val(result.slug);
         }
     });
-    // var endpoint = "<?php //echo viurl('/vehicle.php');?>";
-    // var url = 'admin.php?page=viedit&id=';
-    // //console.log(url);
-    // jQuery.ajax({
-    //     url: endpoint,
-    //     method: "POST",
-    //     data: new FormData(document.getElementById('vehicleform')),
-    //     contentType: false,
-    //     cache: false,
-    //     processData: false,
-    //     dataType: "json",
-    //     success: function(data) {
-    //         console.log(data);
-    //         if (data.insertid) {
-    //             url += data.insertid;
-    //             location.href = url;
-    //         }
-    //     }
-    // });
 }
 
 function save() {
     var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-    //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
-    jQuery('#action').val('viVehicle');
-    var url = 'admin.php?page=viedit&id=';
+    jQuery('#action').val('rvVehicle');
+    var url = 'admin.php?page=rvedit&id=';
     jQuery.ajax({
         url: endpoint,
         method: "POST",
@@ -249,12 +225,11 @@ function save() {
 }
 
 jQuery(document).ready(function($) {
-    $('#visave').on('click', function(e) {
+    $('#rvsave').on('click', function(e) {
         e.preventDefault();
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-        //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
-        jQuery('#action').val('viVehicle');
-        var url = 'admin.php?page=viedit&id=';
+        jQuery('#action').val('rvVehicle');
+        var url = 'admin.php?page=rvedit&id=';
         console.log(url);
         $.ajax({
             url: endpoint,
@@ -276,9 +251,8 @@ jQuery(document).ready(function($) {
     $('.gallery').on('click', function(e) {
         e.preventDefault();
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-        //var endpoint = "<?php //echo viurl('/vehicle.php');?>";
-        jQuery('#action').val('viVehicle');
-        var url = 'admin.php?page=viedit&id=';
+        jQuery('#action').val('rvVehicle');
+        var url = 'admin.php?page=rvedit&id=';
         $.ajax({
             url: endpoint,
             method: "POST",
@@ -292,9 +266,6 @@ jQuery(document).ready(function($) {
                 if (data.insertid) {
                     url += data.insertid;
                     location.href = url;
-                    //   location.href = url+'#gallerycontent';
-                    // history.pushState({}, null, url);
-                    // $('#vehicle').val('update');
                 }
             }
         });
@@ -303,9 +274,8 @@ jQuery(document).ready(function($) {
     $('#featured').on('change', function(e) {
         e.preventDefault();
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-        //var endpoint = "<?php //echo viurl("/image.php");?>";
         var formData = new FormData(document.getElementById('vehicleform'));
-        formData.append('action', 'viUpload');
+        formData.append('action', 'rvUpload');
         $.ajax({
             url: endpoint,
             method: "POST",
@@ -354,14 +324,13 @@ jQuery(document).ready(function($) {
     // single drag drop
     $('.drop_area').on('drop', function(e) {
         e.preventDefault();
-        jQuery('#action').val('viDragDrop');
+        jQuery('#action').val('rvDragDrop');
         $(this).removeClass('drag_over');
         var formData = new FormData();
         var files = e.originalEvent.dataTransfer.files;
         formData.append('file[0]', files[0]);
         formdata.append('id', id);
-        formdata.append('action', 'viSingleDragDrop');
-        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        formdata.append('action', 'rvSingleDragDrop');
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
@@ -386,8 +355,7 @@ jQuery(document).ready(function($) {
         var formData = new FormData(document.getElementById('vehicleform'));
         var id = $('#id').val();
         formData.append('id', id);
-        formData.append('action', 'viDragDrop');
-        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        formData.append('action', 'rvDragDrop');
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
@@ -417,8 +385,7 @@ jQuery(document).ready(function($) {
             formData.append('file[]', files[i]);
         }
         formData.append('id', id);
-        formData.append('action', 'viDragDrop');
-        // var endpoint = "<?php //echo viurl("/dragdrop.php");?>";
+        formData.append('action', 'rvDragDrop');
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
         $.ajax({
             url: endpoint,
@@ -441,12 +408,11 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.delete', function(e) {
         e.preventDefault();
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
-        // var endpoint = "<?php //echo viurl("/image_delete.php");?>";
         var formdata = new FormData(document.getElementById('vehicleform'));
         var image = $(this).data('image_id');
         formdata.append('image_id', image);
         var thumb = $(this).parent();
-        formdata.append('action', 'viDeleteImage');
+        formdata.append('action', 'rvDeleteImage');
 
         $.ajax({
             url: endpoint,
@@ -487,16 +453,16 @@ jQuery(document).ready(function($) {
         $('.publishcontent').show();
     });
     //Set Featured Image
-    var viFeatured;
+    var rvFeatured;
     $('#featuredUpload').click(function(e) {
         e.preventDefault();
         // If the upload object has already been created, reopen the dialog
-        if (viFeatured) {
-            viFeatured.open();
+        if (rvFeatured) {
+            rvFeatured.open();
             return;
         }
         // Extend the wp.media object
-        viFeatured = wp.media.frames.file_frame = wp.media({
+        rvFeatured = wp.media.frames.file_frame = wp.media({
             title: 'Select Image',
             button: {
                 text: 'Select Image'
@@ -504,39 +470,38 @@ jQuery(document).ready(function($) {
             multiple: false
         });
         // When a file is selected, grab the URL and set it as the text field's value
-        viFeatured.on('select', function() {
-            var attachment = viFeatured.state().get('selection').first().toJSON();
+        rvFeatured.on('select', function() {
+            var attachment = rvFeatured.state().get('selection').first().toJSON();
             $('#featuredImage').val(attachment.url);
             $('#featuredid').val(attachment.id);
             $('#featuredThumb').attr('src', attachment.url);
             $('#featuredUpload').text('Change Image');
         });
         // Open the upload dialog
-        viFeatured.open();
+        rvFeatured.open();
     });
     //Set Gallery
-    var viGallery;
+    var rvGallery;
     $('#gallery_button').click(function(e) {
         e.preventDefault();
-        if (viGallery) {
-            viGallery.open();
+        if (rvGallery) {
+            rvGallery.open();
             return;
         }
-        viGallery = wp.media.frames.file_frame = wp.media({
+        rvGallery = wp.media.frames.file_frame = wp.media({
             title: 'Select Image',
             button: {
                 text: 'Select Image'
             },
             multiple: true
         });
-        viGallery.on('select', function() {
-            var attachment = viGallery.state().get('selection').toJSON();
+        rvGallery.on('select', function() {
+            var attachment = rvGallery.state().get('selection').toJSON();
             var gallery = '';
             var thumbs = '';
             var galleryfiles = '';
             $.each(attachment, function(key, value) {
                 thumbs += '<img width="90" src="' + value.url + '" alt="" />';
-                //gallery +='<input type="hidden" name="gallery[]" value="'+value.url+'" id="img'+key+'" />';
                 gallery += value.url + ',';
                 galleryfiles += value.id + ',';
             });
@@ -544,7 +509,7 @@ jQuery(document).ready(function($) {
             $('#galleryfiles').val(galleryfiles);
             $('#gallery_container').html(thumbs);
         });
-        viGallery.open();
+        rvGallery.open();
     });
 });
 </script>

@@ -20,12 +20,12 @@ class Vehicle
         $this->table = $this->db->prefix.'inventory';
     }
 
-    public function viUrl(string $viLink): string
+    public function rvUrl(string $rvLink): string
     {
-        return plugins_url($viLink, dirname(__FILE__));
+        return plugins_url($rvLink, dirname(__FILE__));
     }
 
-    public function viList(): string
+    public function rvList(): string
     {
         $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
         //$rvcat = 1;
@@ -49,7 +49,7 @@ class Vehicle
         return json_encode($vehicles);
     }
 
-    public function viShortcodeList($rvcat = 1): string
+    public function rvShortcodeList($rvcat = 1): string
     {
         $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
 
@@ -70,10 +70,10 @@ class Vehicle
         //echo $query;
         $vehicles = $this->db->get_results($query);
         // return $vehicles;
-        $total  = $this->viTotal($rvcat);
-        $slug = get_option('vi_slug');
-        $phone = get_option('vi_phone');
-        $contact_dealer = get_option('vi_contact_dealer');
+        $total  = $this->rvTotal($rvcat);
+        $slug = get_option('rv_slug');
+        $phone = get_option('rv_phone');
+        $contact_dealer = get_option('rv_contact_dealer');
 
         $pagination = paginate_links( array(
             'base' => add_query_arg('page', '%#%'),
@@ -189,7 +189,7 @@ class Vehicle
         $(document).ready(function(){
             $(document).on('click','.print',function(){
                 var id = $(this).data('id');
-                var details = '".$this->viUrl('/vehicle_details.php')."';
+                var details = '".$this->rvUrl('/vehicle_details.php')."';
         
                 $.ajax({
                     url: details+'?vehicle='+id,
@@ -232,7 +232,7 @@ class Vehicle
         return $output;
     }
 
-    public function viTotal($rvcat=NULL): int
+    public function rvTotal($rvcat=NULL): int
     {
         $where = 1;
         if(!empty($rvcat)){
@@ -242,7 +242,7 @@ class Vehicle
         return $total;
     }
 
-    public function viCreate(): string
+    public function rvCreate(): string
     {
         $input = $_POST;
         $data['post'] = $_POST;
@@ -279,7 +279,7 @@ class Vehicle
     }
 
     // Vehicle Slug
-    public function viSlug(): string
+    public function rvSlug(): string
     {
         $data['year'] = '';
         $data['make'] = '';
@@ -288,17 +288,17 @@ class Vehicle
 
         if(!empty($_REQUEST['year'])){
             $data['year'] = trim($_REQUEST['year']);
-            $data['slug'] = $this->viBuildSlug($data['year']);
+            $data['slug'] = $this->rvBuildSlug($data['year']);
         }
 
         if(!empty($_REQUEST['make'])){
             $data['make'] = trim($_REQUEST['make']);
-            $data['slug'] .= '-'.$this->viBuildSlug($data['make']);
+            $data['slug'] .= '-'.$this->rvBuildSlug($data['make']);
         }
 
         if(!empty($_REQUEST['model'])){
             $data['model'] = trim($_REQUEST['model']);
-            $data['slug'] .= '-'.$this->viBuildSlug($data['model']);
+            $data['slug'] .= '-'.$this->rvBuildSlug($data['model']);
         }
 
         $data['count'] = $this->db->get_var("SELECT COUNT('id') FROM ".$this->table." WHERE slug LIKE '%".$data['slug']."%'");
@@ -313,7 +313,7 @@ class Vehicle
     }
 
     // build vehicle slug
-    public function viBuildSlug(string $string)
+    public function rvBuildSlug(string $string)
     {
         $string = trim(strtolower($string));
         $string = preg_replace('/[^a-z0-9 -]+/', '', $string);
@@ -324,7 +324,7 @@ class Vehicle
 
     // Vehicle Update
 
-    public function viUpdate(): string
+    public function rvUpdate(): string
     {
         $input = $_POST;
         $id = $input['id'];
@@ -359,13 +359,13 @@ class Vehicle
        return json_encode($data);
     }
 
-    public function viDetails($slug)
+    public function rvDetails($slug)
     {
         $result = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE slug = %s", $slug));
         return $result;
     }
 
-    public function viDelete(): string
+    public function rvDelete(): string
     {
         $id = $_REQUEST['post_id'];
         $data['vehicle'] = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE id = %d", $id));
@@ -378,10 +378,10 @@ class Vehicle
         echo json_encode($data);
     }
 
-    public function viSitemap(): array
+    public function rvSitemap(): array
     {
         $home = get_option('home');
-        $rvslug = get_option('vi_slug');
+        $rvslug = get_option('rv_slug');
         $invlink = $home.'/'.$rvslug.'/';
         $query = "SELECT slug FROM ".$this->table." WHERE 1";
         $slugs = $this->db->get_results($query);

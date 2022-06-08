@@ -1,51 +1,35 @@
 <?php
 /*
-* viaddnew
+* rvaddnew
 * @Package: rvinventory
 */
 require_once( ABSPATH . 'wp-load.php' );
 require_once( ABSPATH . 'wp-admin/admin.php' );
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
+
 $rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 if(file_exists($rvAutoload)){
   require_once $rvAutoload;
 }
-// use Inc\Vehicle;
+
+use Inc\Vehicle;
+
 function rvurl(string $rvLink){
 	return plugins_url($rvLink, dirname(__FILE__));
 }
 ?>
 <div id="vehicle">
     <h2>Add New Vehicle</h2>
-    <?php
-  global $wpdb;
-  $table = $wpdb->prefix.'inventory';
+<?php
+
+$rv = new Vehicle();
+
   if (!empty($_POST)){
-    $input = $_POST;
-    $data = [
-            'year' => $input['year'],
-            'make' => $input['make'],
-            'model' => $input['model'],
-            'slug' => $input['slug'],
-            'mileage' => $input['mileage'],
-            'salePrice' => $input['salePrice'],
-            'description' => $input['description'],
-            'rvCategory' => $input['rvCategory'],
-            'featuredImage' => $input['featuredImage'],
-            'featuredid' => $input['featuredid'],
-            'gallery' => rtrim($input['gallery'],','),
-            'galleryfiles' => rtrim($input['galleryfiles'],','),
-            'status' => $input['status'],
-            'createdBy' => $input['createdBy'],
-            'createdAt' => $input['createdAt']
-    ];
-        $format = ['%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%d','%s','%s'];
-        $wpdb->insert($table,$data,$format);
-        $inserted = $wpdb->insert_id;
-        if($inserted && empty($_GET['id'])){
-          $url='admin.php?page=viedit&id='.$inserted;
-          echo "<script>location.href = '".$url."'</script>";
-        }
+    $insert = $rv->rvCreate();
+    if($insert['insertid'] && empty($_GET['id'])){
+        $url='admin.php?page=rvedit&id='.$insert['insertid'];
+        echo "<script>location.href = '".$url."'</script>";
+    }
   }
   ?>
     <div class="vehicleform">
@@ -241,13 +225,14 @@ jQuery(document).ready(function($) {
             dataType: "json",
             success: function(data) {
                 console.log(data);
-                if (data.insertid) {
+                if(data.insertid){
                     url += data.insertid;
                     location.href = url;
                 }
             }
         });
     });
+
     $('.gallery').on('click', function(e) {
         e.preventDefault();
         var endpoint = "<?php echo admin_url('admin-ajax.php');?>";
@@ -270,6 +255,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     // image upload
     $('#featured').on('change', function(e) {
         e.preventDefault();
@@ -287,11 +273,7 @@ jQuery(document).ready(function($) {
             success: function(data) {
                 console.log(data);
                 var html = '';
-                html +=
-                    '<div class="thumbnail"><span class="btn btn-danger btn-xs pull-right delete" data-image_id="' +
-                    data.save.insertid +
-                    '"><i class="fa fa-times"></i></span><img class="img-fluid" src="' +
-                    data.url + '" alt="" /></div>';
+                html +='<div class="thumbnail"><span class="btn btn-danger btn-xs pull-right delete" data-image_id="' + data.save.insertid +'"><i class="fa fa-times"></i></span><img class="img-fluid" src="' + data.url + '" alt="" /></div>';
                 $('#featured_thumb').html(html);
                 $('#featuredImage').val(data.url);
                 $('#featuredid').val(data.save.insertid);
@@ -304,6 +286,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     // drag and drop
     $("html").on("dragover", function(e) {
         e.preventDefault();
@@ -321,6 +304,7 @@ jQuery(document).ready(function($) {
         $(this).removeClass('drag_over');
         return false;
     });
+
     // single drag drop
     $('.drop_area').on('drop', function(e) {
         e.preventDefault();
@@ -349,6 +333,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     // multiple select
     $('#ddgallery').on('change', function(e) {
         e.preventDefault();
@@ -374,6 +359,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     // multiple drag drop
     $('#drop_area').on('drop', function(e) {
         e.preventDefault();
@@ -404,6 +390,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     // delete image
     $(document).on('click', '.delete', function(e) {
         e.preventDefault();
@@ -430,6 +417,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
     $(document).on('click', '.detail', function(e) {
         e.preventDefault();
         $('#tabs').find('.tab').removeClass('active');
@@ -445,6 +433,7 @@ jQuery(document).ready(function($) {
         $('#tabcontent').find('.tabcontent').hide();
         $('.gallerycontent').show();
     });
+
     $(document).on('click', '.publish', function(e) {
         e.preventDefault();
         $('#tabs').find('.tab').removeClass('active');
@@ -452,6 +441,7 @@ jQuery(document).ready(function($) {
         $('#tabcontent').find('.tabcontent').hide();
         $('.publishcontent').show();
     });
+
     //Set Featured Image
     var rvFeatured;
     $('#featuredUpload').click(function(e) {

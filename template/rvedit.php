@@ -1,16 +1,20 @@
 <?php
 /*
-* viedit
+* rvedit
 * @Package: rvinventory
 */
 require_once( ABSPATH . 'wp-load.php' );
 require_once( ABSPATH . 'wp-admin/admin.php' );
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
+
 $rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 if(file_exists($rvAutoload)){
   require_once $rvAutoload;
 }
-// use Inc\Vehicle;
+
+use Inc\Vehicle;
+use Inc\Image;
+
 function rvurl(string $rvLink){
 	return plugins_url($rvLink, dirname(__FILE__));
 }
@@ -18,42 +22,22 @@ function rvurl(string $rvLink){
 <div id="vehicle">
 	<h2>Edit Vehicle</h2>
   <?php
-  global $wpdb;
-  $table = $wpdb->prefix.'inventory';
-  if(empty($_GET['id'])){
-    $url='admin.php?page=viaddnew';
-    echo "<script>location.href = '".$url."'</script>";
-  }
+  $rvs = new Vehicle();
   if(!empty($_GET['id']) && empty($_POST)){
     $id = $_GET['id'];
-    $vehicle = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE id = %d", $id));
+    $vehicle = $rvs->rvDetails($id);
+  }else{
+    $url='admin.php?page=rvaddnew';
+    echo "<script>location.href = '".$url."'</script>";
   }
+
   if(!empty($_GET['id']) && !empty($_POST)){
-    $input = $_POST;
-    $id = $input['id'];
-    $data = [
-          'year' => $input['year'],
-          'make' => $input['make'],
-          'model' => $input['model'],
-          'slug' => $input['slug'],
-          'mileage' => $input['mileage'],
-          'salePrice' => $input['salePrice'],
-          'description' => $input['description'],
-          'rvCategory' => $input['rvCategory'],
-          'featuredImage' => $input['featuredImage'],
-          'featuredid' => $input['featuredid'],
-          'gallery' => rtrim($input['gallery'],','),
-          'galleryfiles' => rtrim($input['galleryfiles'],','),
-          'status' => $input['status'],
-          'createdBy' => $input['createdBy'],
-          'createdAt' => $input['createdAt']
-    ];
-    $where = [ 'id' => $id ];
-    $wpdb->update($table, $data, $where);
+    $vehicle = $rvs->rvUpdate();
+
     if($id){
-      $url='admin.php?page=viedit&id='.$id;
+      $url='admin.php?page=rvedit&id='.$id;
       echo "<script>location.href = '".$url."'</script>";
-    }
+    } 
   } 
   ?>
 	<div class="vehicleform">
@@ -74,14 +58,14 @@ function rvurl(string $rvLink){
         <label for="year" class="control-label">Year</label>
           <input type="text" name="year" id="year" class="form-control" onBlur="checkslug();" value="<?php echo !empty($vehicle->year)?$vehicle->year:'';?>" placeholder="Year" />
           <label for="make" class="control-label">Make</label>
-          <input type="text" name="make" id="make" class="form-control" onBlur="checkslug();" value="<?php echo !empty($vehicle->make)?$vehicle->make:'';?>" placeholder="Make" />
+          <input type="text" name="make" id="make" class="form-control" onBlur="checkslug();" value="<?php echo !empty($vehicle->make)?stripslashes($vehicle->make):'';?>" placeholder="Make" />
           <label for="model" class="control-label">Model</label>
-          <input type="text" name="model" id="model" class="form-control" onBlur="checkslug();" value="<?php echo !empty($vehicle->model)?$vehicle->model:'';?>" placeholder="Model" />
+          <input type="text" name="model" id="model" class="form-control" onBlur="checkslug();" value="<?php echo !empty($vehicle->model)?stripslashes($vehicle->model):'';?>" placeholder="Model" />
           
           <input type="hidden" name="slug" id="slug" value="<?php echo !empty($vehicle->slug)?$vehicle->slug:$vehicle->id;?>" />
           <label for="rvCategory" class="control-label">RV Category</label>
           <select name="rvCategory" id="rvCategory" class="form-control">
-          <?php echo !empty($vehicle->rvCategory)?'<option selected value="'.$vehicle->rvCategory.'">'.$vehicle->rvCategory.'</option>':'<option value="">Select</option>';?>
+          <?php echo !empty($vehicle->rvCategory)?'<option selected value="'.stripslashes($vehicle->rvCategory).'">'.stripslashes($vehicle->rvCategory).'</option>':'<option value="">Select</option>';?>
             <option value="Class A, B & C RVs">Class A, B & C RV's</option>
             <option value="Campers">Campers</option>
             <option value="Fifth Wheels">Fifth Wheels</option>
@@ -106,7 +90,7 @@ function rvurl(string $rvLink){
         <div class="form-group">
             <label for="description" class="control-label">Description</label>
             <textarea class="form-control" rows="5" autocomplete="off" cols="40" name="description"
-                id="description"><?php echo !empty($vehicle->description)?$vehicle->description:''; ?></textarea>
+                id="description"><?php echo !empty($vehicle->description)?stripslashes($vehicle->description):''; ?></textarea>
         </div>
 
       </div>
@@ -141,18 +125,18 @@ function rvurl(string $rvLink){
               if(!empty($vehicle->gallery) && !empty($vehicle->galleryfiles)){
                 $links = rtrim($vehicle->gallery,',');
                 $links = ltrim($links,',');
-                //echo $links;
                 $links = explode(',',$links); 
-                //print_r($links);
+                
                 $fileids = rtrim($vehicle->galleryfiles,',');
                 $fileids = ltrim($fileids,',');
-                //echo $fileids;
+          
                 $fileids = explode(',',$fileids); 
-                //print_r($fileids);
-                global $wpdb,$table_prefix;
+  
+                $image = new Image();
+                
                 foreach($fileids as $id){
                   if($id){
-                  $link = $wpdb->get_var('SELECT url FROM '.$table_prefix.'inventory_images WHERE id = '.$id);
+                  $link = $image->imageLink($id);
                   echo '<div class="thumbnail" data-id="'.$id.'"><span class="btn btn-danger btn-xs pull-right update" data-image_id="'.$id.'"><i class="fa fa-times"></i></span><img class="img-fluid" src="'.$link.'" alt="" /></div>';
                   }
                 }

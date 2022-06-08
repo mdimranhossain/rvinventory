@@ -1,13 +1,13 @@
 <?php
 /*
-* visettings
+* rvsettings
 * @Package: rvinventory
 */
 
-//require_once( ABSPATH . 'wp-load.php' );
 require_once( ABSPATH . 'wp-admin/admin.php' );
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
- $rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
 
 if (file_exists($rvAutoload)) {
     require_once $rvAutoload;
@@ -15,9 +15,9 @@ if (file_exists($rvAutoload)) {
 
 use Inc\Setting;
 $setting = new Setting();
-$data = $setting->viInventoryOptions();
+$data = $setting->rvInventoryOptions();
 
-function viurl(string $rvLink){
+function rvurl(string $rvLink){
 	return plugins_url($rvLink, dirname(__FILE__));
 }
 
@@ -49,7 +49,7 @@ flush_rewrite_rules();
 	<div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <form id="visettings" action="" method="POST">
+        <form id="rvsettings" action="" method="POST">
           <input type="hidden" name="user_id" value="">
           <div class="form-group">
           <label class="control-label" for="rv_slug">Inventory Slug/URL</label>

@@ -15,17 +15,17 @@
  */
 
 declare(strict_types=1);
-$viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
-if (file_exists($viAutoload)) {
-    require_once $viAutoload;
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+if (file_exists($rvAutoload)) {
+    require_once $rvAutoload;
 }
 
 use Inc\Init;
 
-$viInit = new Init;
+$rvInit = new Init;
 
-$viInit->start();
+$rvInit->start();
 
-register_activation_hook(__FILE__, [$viInit, 'viActivate']);
-register_deactivation_hook(__FILE__, [$viInit, 'viDeactivate']);
-register_uninstall_hook(__FILE__, ['Init', 'viUninstall']);
+register_activation_hook(__FILE__, [$rvInit, 'rvActivate']);
+register_deactivation_hook(__FILE__, [$rvInit, 'rvDeactivate']);
+register_uninstall_hook(__FILE__, ['Init', 'rvUninstall']);

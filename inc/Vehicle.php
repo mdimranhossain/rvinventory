@@ -17,7 +17,7 @@ class Vehicle
     {
         global $wpdb;
         $this->db = $wpdb;
-        $this->table = $this->db->prefix.'inventory';
+        $this->table = $this->db->prefix.'rvinventory';
     }
 
     public function rvUrl(string $rvLink): string
@@ -41,12 +41,37 @@ class Vehicle
         } else {
             $offset = 0;
         }
+
+        $query = "SELECT * FROM ".$this->table." WHERE ".$where;
         
-        $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
+        // $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
         //echo $query;
         $vehicles = $this->db->get_results($query);
 
         return json_encode($vehicles);
+    }
+
+    public function rvs()
+    {
+        $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
+
+        $where = "1";
+        if(!empty($_GET['rvcat'])){
+            $rvcat = $_GET['rvcat'];
+            $where = "rvCategory ='".$rvcat."'";
+        }
+
+        $per_page = 10;
+        if ($page > 1) {
+            $offset = ($page- 1) * $per_page ;
+        } else {
+            $offset = 0;
+        }
+
+        $query = "SELECT * FROM ".$this->table." WHERE ".$where;
+ 
+        $vehicles = $this->db->get_results($query);
+        echo json_encode(['data'=>$vehicles]);
     }
 
     public function rvShortcodeList($rvcat = 1): string
@@ -270,7 +295,7 @@ class Vehicle
         if($data['success']){
             $data['message'] = "Vehicle Added Successfully.";
         }else{
-            $data['error'] = "Something Went Wrong!!!".$this->db->last_error;
+            $data['message'] = "Something Went Wrong!!!".$this->db->last_error;
         }
 
         $data['insertid'] = $this->db->insert_id;
@@ -326,7 +351,7 @@ class Vehicle
 
     public function rvUpdate(): string
     {
-        $input = $_POST;
+        $input = $_REQUEST;
         $id = $input['id'];
         $data['update'] = [
             'year' => $input['year'],
@@ -361,7 +386,12 @@ class Vehicle
 
     public function rvDetails($slug)
     {
-        $result = $this->db->get_row($this->db->prepare("SELECT * FROM {$this->table} WHERE slug = %s", $slug));
+        $result = $this->db->get_row(
+            $this->db->prepare(
+                "SELECT * FROM {$this->table} WHERE id = %s OR slug = %s",
+                 [$slug,$slug]
+                 )
+        );
         return $result;
     }
 

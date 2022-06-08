@@ -19,8 +19,8 @@ class Image
     {
         global $wpdb;
         $this->db = $wpdb;
-        $this->table = $this->db->prefix.'inventory';
-        $this->imageTable = $this->db->prefix.'inventory_images';
+        $this->table = $this->db->prefix.'rvinventory';
+        $this->imageTable = $this->db->prefix.'rvinventory_images';
         if(!defined('WP_CONTENT_URL')){
             define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
         }
@@ -192,6 +192,15 @@ class Image
             }
         }
         return json_encode($data);
+    }
+
+    //Image Link
+    public function imageLink($id)
+    {
+        $data['query'] = "SELECT url FROM ".$this->imageTable." WHERE id = ".$id;
+        $data['link'] = $this->db->get_var($data['query']);
+
+        return $data['link'];
     }
 
     //Sanitize file name

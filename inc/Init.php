@@ -74,7 +74,9 @@ class Init
         
         add_action( 'wp_ajax_rvUpload', [$this, 'rvUpload']);
         add_action( 'wp_ajax_rvSlug',[$this,'rvSlug']);
+        add_action( 'wp_ajax_nopriv_rvVehicle',[$this,'rvVehicle']);
         add_action( 'wp_ajax_rvVehicle',[$this,'rvVehicle']);
+        add_action( 'wp_ajax_rvDetails',[$this,'rvDetails']);
         add_action( 'wp_ajax_rvDragDrop',[$this,'rvDragDrop']);
         add_action( 'wp_ajax_rvUpdateImage',[$this,'rvUpdateImage']);
         add_action( 'wp_ajax_rvUpdateGallery',[$this,'rvUpdateGallery']);
@@ -351,9 +353,25 @@ class Init
             case 'delete':
                 $vehicle->rvDelete();
                 break;
+            case 'rvs':
+                $vehicle->rvs();
+                break;
             default:
                 echo $vehicle->rvList();
         }
+        wp_die();
+    }
+
+    public function rvDetails(){
+        $vehicle = new Vehicle();
+
+        $slug = $_REQUEST['id'];
+
+        if(!empty($_REQUEST['slug'])){
+            $slug = $_REQUEST['slug'];
+        }
+
+        echo json_encode($vehicle->rvDetails($slug));
         wp_die();
     }
 

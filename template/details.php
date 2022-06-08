@@ -5,25 +5,31 @@
 
 get_header(); 
 
-$slug = get_option('vi_slug');
+$rvAutoload = dirname(__FILE__) . '/vendor/autoload.php';
+if(file_exists($rvAutoload)){
+  require_once $rvAutoload;
+}
+
+use Inc\Vehicle;
+
+$slug = get_option('rv_slug');
 $vslug = get_query_var($slug);
 
-$emailfriend = get_option('vi_emailfriend');
-$availability = get_option('vi_availability');
-$contact_dealer = get_option('vi_contact_dealer');
-$address = get_option('vi_address');
-$city = get_option('vi_city');
-$state = get_option('vi_state');
-$zip = get_option('vi_zip');
-$phone = get_option('vi_phone');
-$weekday = get_option('vi_weekday');
-$saturday = get_option('vi_saturday');
-$weekend = get_option('vi_weekend');
+$emailfriend = get_option('rv_emailfriend');
+$availability = get_option('rv_availability');
+$contact_dealer = get_option('rv_contact_dealer');
+$address = get_option('rv_address');
+$city = get_option('rv_city');
+$state = get_option('rv_state');
+$zip = get_option('rv_zip');
+$phone = get_option('rv_phone');
+$weekday = get_option('rv_weekday');
+$saturday = get_option('rv_saturday');
+$weekend = get_option('rv_weekend');
 
-global $wpdb;
-$table = $wpdb->prefix.'inventory';
-$query = $wpdb->prepare("SELECT * FROM {$table} WHERE slug='%s'", $vslug);
-$vehicle = $wpdb->get_row($query);
+$vehicle = new Vehicle();
+$vehicle = $vehicle->rvDetails($vslug);
+
 $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 ?>
 
@@ -113,8 +119,7 @@ $vehicleTitle = $vehicle->year.' '.$vehicle->make.' '.$vehicle->model;
 			<div class="buttons">
 				<a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $availability.'?vehicle='.$vfrom.'&vehicleurl='.$vdetail;?>" href="javascript:;" id="" role="button">
 				<i class="fa fa-check-square-o"></i><span> Check Availability</span></a>
-				<!-- <a class="btn btn-danger btn-block" data-fancybox data-type="iframe" data-src="<?php echo $emailfriend; ?>" href="javascript:;" id="" role="button">
-				<i class="fa fa-envelope-o"></i><span> Email a Friend</span></a> -->
+		
 			</div>
 		
 			<div class="contact p-3 bg-white rounded">

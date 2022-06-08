@@ -4,20 +4,7 @@
 *
 * @Package: rvinventory
 **/
-declare(strict_types=1);
 
-$viAutoload = dirname(__FILE__) . '/vendor/autoload.php';
-if (file_exists($viAutoload)) {
-    require_once $viAutoload;
-}
-
-use Inc\Vehicle;
-
-$vehicle = new Vehicle($wpdb);
-
-$viVehicles = $vehicle->vehicleList();
-
-$viVehicles = json_decode($viVehicles);
 ?>
 
 <!DOCTYPE html>
@@ -33,36 +20,36 @@ $viVehicles = json_decode($viVehicles);
 </head>
 <body>
   <div id="rvinventory">
-    <h2>Vehicles</h2>
+    <h2 style="text-align:center;">RV Inventory- Vehicles</h2>
     <div id="vehiclelist" class="table-responsive">
       <table id="vehicles" class="display table table-bordered table-striped">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Vehiclename</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Website</th>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Capacity</th>
           </tr>
         </thead>
         <tbody>
           <?php
-            if ($viVehicles) {
-                foreach ($viVehicles as $viVehicle) {
-                    echo '<tr><td><a class="dlink" dataid="' . $viVehicle->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $viVehicle->id . '</a></td><td><a class="dlink" dataid="' . $viVehicle->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $viVehicle->name . '</a></td><td><a class="dlink" dataid="' . $viVehicle->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $viVehicle->vehiclename . '</a></td><td>' . $viVehicle->email . '</td><td>' . $viVehicle->phone . '</td><td>' . $viVehicle->website . '</td></tr>';
-                }
-            }
+            // if ($rvs) {
+            //     foreach ($rvs as $rv) {
+            //         echo '<tr><td><a class="dlink" dataid="' . $rv->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $rv->year . '</a></td><td><a class="dlink" dataid="' . $rv->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $rv->make . '</a></td><td><a class="dlink" dataid="' . $rv->id . '" href="#" data-toggle="modal" data-target="#vehicledetails">' . $rv->model . '</a></td><td>' . $rv->salePrice . '</td><td>' . $rv->rvCategory . '</td><td>' . $rv->payloadCapacity . '</td></tr>';
+            //     }
+            // }
             ?>
         </tbody>
         <tfoot>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Vehiclename</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Website</th>
+          <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Capacity</th>
           </tr>
         </tfoot>
       </table>
@@ -88,6 +75,16 @@ $viVehicles = json_decode($viVehicles);
     jQuery(document).ready(function($) {
       $('#vehicles').DataTable({
         responsive: true,
+        ajax: '../../../wp-admin/admin-ajax.php?action=rvVehicle&vehicle=rvs',
+        columns: [
+            { data: 'year' },
+            { data: 'make' },
+            { data: 'model' },
+            { data: 'salePrice' },
+            { data: 'rvCategory' },
+            { data: 'payloadCapacity' }
+            
+        ],
       });
 
       $(document).on('click', '.dlink', function(e) {

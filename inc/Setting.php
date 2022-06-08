@@ -17,8 +17,8 @@ class Setting
     {
         global $wpdb;
         $this->db = $wpdb;
-        $this->table = $this->db->prefix.'inventory';
-        $this->imageTable = $this->db->prefix.'inventory_images';
+        $this->table = $this->db->prefix.'rvinventory';
+        $this->imageTable = $this->db->prefix.'rvinventory_images';
     }
 
     public function rvUpdateInventoryOptions($data): string

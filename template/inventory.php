@@ -26,7 +26,7 @@ $pageTitle = get_option('rv_pageTitle');
 <div class="bead">
 	<div class="container">
 	      <div class="text-center">
-		   <h1 class="entry-title"><?php echo $pageTitle;?></h1>
+		   <h1 class="entry-title"><?php echo stripslashes($pageTitle);?></h1>
 	      </div>
 	</div>
 </div>
@@ -45,7 +45,7 @@ $pageTitle = get_option('rv_pageTitle');
 </form>
 	<?php
 		$vehicle = new Vehicle();
-		$vehicles = json_decode($vehicle->rvList());
+		$vehicles = json_decode($vehicle->rvList(TRUE));
 
 		$page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
 		$total = $vehicle->rvTotal();
@@ -57,7 +57,7 @@ $pageTitle = get_option('rv_pageTitle');
 		<div class="vehicle container">
 			<div class="row vehicle-title">
 				<div class="col-sm-6">
-					<h3><a href="<?php echo esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug; ?>"><?php echo $vehicle->year.' '.$vehicle->make.' '.$vehicle->model; ?></a></h3>
+					<h3><a href="<?php echo esc_url(home_url()).'/'.$slug.'/'.$vehicle->slug; ?>"><?php echo stripslashes($vehicle->year.' '.$vehicle->make.' '.$vehicle->model); ?></a></h3>
 				</div>
 				<div class="col-sm-6">
 					<ul>
@@ -86,7 +86,7 @@ $pageTitle = get_option('rv_pageTitle');
 
 				<div class="col-sm-4">
 					<div class="vehicle-description">
-						<p><?php echo $vehicle->description; ?></p>
+						<p><?php echo stripslashes($vehicle->description); ?></p>
 					</div>
 				</div>
 

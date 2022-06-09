@@ -25,7 +25,7 @@ class Vehicle
         return plugins_url($rvLink, dirname(__FILE__));
     }
 
-    public function rvList(): string
+    public function rvList($paged=FALSE): string
     {
         $page = isset( $_GET['page'] ) ? abs( (int) $_GET['page'] ) : 1;
         //$rvcat = 1;
@@ -42,9 +42,13 @@ class Vehicle
             $offset = 0;
         }
 
-        $query = "SELECT * FROM ".$this->table." WHERE ".$where;
         
-        // $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
+        if($paged==TRUE){
+            $query = "SELECT * FROM ".$this->table." WHERE ".$where." ORDER BY year DESC LIMIT ".$offset.",".$per_page;
+        }else{
+            $query = "SELECT * FROM ".$this->table." WHERE ".$where;
+        }
+        
         //echo $query;
         $vehicles = $this->db->get_results($query);
 

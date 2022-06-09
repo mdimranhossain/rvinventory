@@ -122,7 +122,6 @@ class Init
 
         // add body class
         add_filter( 'admin_body_class', [$this,'rvAdminBodyClass'] );
-        
     }
 
     public function rvAdminBodyClass( $classes ) {

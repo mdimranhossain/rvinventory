@@ -56,11 +56,10 @@ class Init
         $this->rv_state = !empty(get_option('rv_state'))?get_option('rv_state'):'WA';
         $this->rv_zip = !empty(get_option('rv_zip'))?get_option('rv_zip'):'98204';
         $this->rv_areas = !empty(get_option('rv_areas'))?get_option('rv_areas'):'Bellevue, Seattle';
-        $this->rv_phone = !empty(get_option('rv_phone'))?get_option('rv_phone'):'';
-        $this->rv_weekday = !empty(get_option('rv_weekday'))?get_option('rv_weekday'):'';
-        $this->rv_saturday = !empty(get_option('rv_saturday'))?get_option('rv_saturday'):'';
-        $this->rv_weekend = !empty(get_option('rv_weekend'))?get_option('rv_weekend'):'';
-
+        $this->rv_phone = !empty(get_option('rv_phone'))?get_option('rv_phone'):'8801711109461';
+        $this->rv_weekday = !empty(get_option('rv_weekday'))?get_option('rv_weekday'):'09:00 AM - 06:00 PM';
+        $this->rv_saturday = !empty(get_option('rv_saturday'))?get_option('rv_saturday'):'10:00 AM - 02:00 PM';
+        $this->rv_weekend = !empty(get_option('rv_weekend'))?get_option('rv_weekend'):'Closed';
     }
 
     public function start()
@@ -284,7 +283,7 @@ class Init
         wp_enqueue_style('styles', $this->rvUrl.'/assets/styles.css');
     }
     
-    public function rvDeleteAttachment() {
+    public function rvDeleteAttachment(){
         $data['id'] = $_REQUEST['post_id'];
         $data['galleryfiles'] = $_REQUEST['galleryfiles'];
         $data['featuredid'] = $_REQUEST['featuredid'];
@@ -304,8 +303,7 @@ class Init
                 if(!empty($data['delete']['gallery'][$image_id])){
                     $data['message']['gallery'][$image_id]= 'Gallery Image(s) Deleted';
                 }
-            }
-                  
+            } 
         }
 
         if(!empty($data['featuredid'])){
@@ -335,6 +333,7 @@ class Init
         echo $vehicle->rvSlug();
         wp_die();
     }
+
     public function rvVehicle(){
         $vehicle = new Vehicle();
         $handle = '';
